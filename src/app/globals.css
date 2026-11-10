@@ -43,73 +43,88 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* Palet Navy kustom — dipakai bersama aksen Cyan */
+@theme {
+  --color-navy-50: oklch(0.975 0.008 250);
+  --color-navy-100: oklch(0.94 0.018 250);
+  --color-navy-200: oklch(0.88 0.035 252);
+  --color-navy-300: oklch(0.79 0.06 253);
+  --color-navy-400: oklch(0.7 0.085 254);
+  --color-navy-500: oklch(0.61 0.1 255);
+  --color-navy-600: oklch(0.53 0.11 256);
+  --color-navy-700: oklch(0.45 0.11 258);
+  --color-navy-800: oklch(0.36 0.09 259);
+  --color-navy-900: oklch(0.28 0.07 260);
+  --color-navy-950: oklch(0.19 0.05 260);
+}
+
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.99 0.003 250);
-  --foreground: oklch(0.16 0.02 250);
+  --background: oklch(0.985 0.005 245);
+  --foreground: oklch(0.19 0.045 260);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.16 0.02 250);
+  --card-foreground: oklch(0.19 0.045 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.16 0.02 250);
-  --primary: oklch(0.55 0.20 255); /* blue-600 */
+  --popover-foreground: oklch(0.19 0.045 260);
+  --primary: oklch(0.45 0.11 258); /* navy-700 */
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.96 0.01 250);
-  --secondary-foreground: oklch(0.25 0.03 250);
-  --muted: oklch(0.96 0.008 250);
-  --muted-foreground: oklch(0.51 0.02 250);
-  --accent: oklch(0.95 0.02 250);
-  --accent-foreground: oklch(0.25 0.03 250);
+  --secondary: oklch(0.955 0.012 248);
+  --secondary-foreground: oklch(0.3 0.07 258);
+  --muted: oklch(0.955 0.01 248);
+  --muted-foreground: oklch(0.5 0.03 252);
+  --accent: oklch(0.94 0.03 215);
+  --accent-foreground: oklch(0.3 0.07 258);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.012 250);
-  --input: oklch(0.9 0.012 250);
-  --ring: oklch(0.65 0.19 255); /* blue-500 */
-  --chart-1: oklch(0.65 0.19 255);
-  --chart-2: oklch(0.704 0.14 225);
-  --chart-3: oklch(0.828 0.189 84.429);
-  --chart-4: oklch(0.666 0.179 58.318);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --border: oklch(0.9 0.018 248);
+  --input: oklch(0.9 0.018 248);
+  --ring: oklch(0.715 0.143 215); /* cyan-500 */
+  --chart-1: oklch(0.45 0.11 258);
+  --chart-2: oklch(0.715 0.143 215);
+  --chart-3: oklch(0.61 0.1 255);
+  --chart-4: oklch(0.79 0.06 253);
+  --chart-5: oklch(0.828 0.113 205);
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.55 0.20 255);
+  --sidebar-foreground: oklch(0.19 0.045 260);
+  --sidebar-primary: oklch(0.45 0.11 258);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.65 0.19 255);
+  --sidebar-ring: oklch(0.715 0.143 215);
 }
 
 .dark {
-  --background: oklch(0.152 0.012 250);
-  --foreground: oklch(0.97 0.005 250);
-  --card: oklch(0.205 0.014 250);
-  --card-foreground: oklch(0.97 0.005 250);
-  --popover: oklch(0.205 0.014 250);
-  --popover-foreground: oklch(0.97 0.005 250);
-  --primary: oklch(0.72 0.16 255); /* blue-400 */
-  --primary-foreground: oklch(0.16 0.03 250);
-  --secondary: oklch(0.27 0.016 250);
-  --secondary-foreground: oklch(0.97 0.005 250);
-  --muted: oklch(0.26 0.014 250);
-  --muted-foreground: oklch(0.7 0.015 250);
-  --accent: oklch(0.27 0.02 250);
-  --accent-foreground: oklch(0.97 0.005 250);
+  --background: oklch(0.18 0.04 258); /* navy laut dalam */
+  --foreground: oklch(0.96 0.008 235);
+  --card: oklch(0.23 0.045 258);
+  --card-foreground: oklch(0.96 0.008 235);
+  --popover: oklch(0.23 0.045 258);
+  --popover-foreground: oklch(0.96 0.008 235);
+  --primary: oklch(0.789 0.154 211); /* cyan-400 */
+  --primary-foreground: oklch(0.19 0.05 260);
+  --secondary: oklch(0.29 0.045 258);
+  --secondary-foreground: oklch(0.96 0.008 235);
+  --muted: oklch(0.28 0.04 258);
+  --muted-foreground: oklch(0.7 0.025 240);
+  --accent: oklch(0.3 0.05 255);
+  --accent-foreground: oklch(0.96 0.008 235);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.65 0.19 255); /* blue-500 */
-  --chart-1: oklch(0.65 0.19 255);
-  --chart-2: oklch(0.704 0.14 225);
-  --chart-3: oklch(0.828 0.189 84.429);
-  --chart-4: oklch(0.666 0.179 58.318);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.205 0.014 250);
-  --sidebar-foreground: oklch(0.97 0.005 250);
-  --sidebar-primary: oklch(0.72 0.16 255);
-  --sidebar-primary-foreground: oklch(0.16 0.03 250);
-  --sidebar-accent: oklch(0.27 0.02 250);
-  --sidebar-accent-foreground: oklch(0.97 0.005 250);
+  --ring: oklch(0.715 0.143 215); /* cyan-500 */
+  --chart-1: oklch(0.789 0.154 211);
+  --chart-2: oklch(0.61 0.1 255);
+  --chart-3: oklch(0.715 0.143 215);
+  --chart-4: oklch(0.79 0.06 253);
+  --chart-5: oklch(0.88 0.035 252);
+  --sidebar: oklch(0.23 0.045 258);
+  --sidebar-foreground: oklch(0.96 0.008 235);
+  --sidebar-primary: oklch(0.789 0.154 211);
+  --sidebar-primary-foreground: oklch(0.19 0.05 260);
+  --sidebar-accent: oklch(0.3 0.05 255);
+  --sidebar-accent-foreground: oklch(0.96 0.008 235);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.65 0.19 255);
+  --sidebar-ring: oklch(0.715 0.143 215);
 }
 
 @layer base {
@@ -124,31 +139,45 @@
     @apply bg-background text-foreground;
   }
   ::selection {
-    background-color: oklch(0.696 0.17 255 / 0.35);
+    background-color: oklch(0.715 0.143 215 / 0.35);
   }
 }
 
 @layer utilities {
-  /* Pola grid halus untuk latar hero */
+  /* Pola grid halus bernuansa navy untuk latar hero */
   .bg-grid {
     background-image:
-      linear-gradient(to right, oklch(0.7 0.12 255 / 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, oklch(0.7 0.12 255 / 0.08) 1px, transparent 1px);
+      linear-gradient(to right, oklch(0.61 0.1 255 / 0.09) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0.61 0.1 255 / 0.09) 1px, transparent 1px);
     background-size: 44px 44px;
   }
 
-  /* Teks gradasi aksen (blue → cyan → sky) */
+  /* Teks gradasi navy → cyan dengan animasi bergerak lembut */
   .text-gradient {
-    @apply bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent;
+    @apply from-navy-800 via-cyan-600 to-navy-800 bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      to right,
+      oklch(0.36 0.09 259),
+      oklch(0.715 0.143 215),
+      oklch(0.36 0.09 259)
+    );
+    background-size: 220% auto;
+    animation: gradient-shift 7s ease-in-out infinite;
   }
   .dark .text-gradient {
-    @apply from-blue-300 via-cyan-300 to-sky-200;
+    @apply from-navy-200 via-cyan-300 to-navy-200;
+    background-image: linear-gradient(
+      to right,
+      oklch(0.88 0.035 252),
+      oklch(0.845 0.13 205),
+      oklch(0.88 0.035 252)
+    );
   }
 
-  /* Scrollbar tipis untuk konten yang bisa digulir (mis. dialog) */
+  /* Scrollbar tipis bernuansa cyan untuk konten yang bisa digulir (mis. dialog) */
   .custom-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: oklch(0.6 0.08 255 / 0.4) transparent;
+    scrollbar-color: oklch(0.715 0.143 215 / 0.4) transparent;
   }
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
@@ -158,11 +187,56 @@
     background: transparent;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: oklch(0.6 0.08 255 / 0.4);
+    background-color: oklch(0.715 0.143 215 / 0.4);
     border-radius: 9999px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: oklch(0.65 0.13 255 / 0.6);
+    background-color: oklch(0.715 0.143 215 / 0.6);
+  }
+
+  /* Animasi blob latar yang mengapung perlahan */
+  .animate-blob {
+    animation: blob-float 16s ease-in-out infinite;
+  }
+  .animate-blob-delayed {
+    animation: blob-float 16s ease-in-out 4s infinite;
+  }
+  .animate-blob-slow {
+    animation: blob-float 20s ease-in-out 8s infinite;
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes blob-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(36px, -28px) scale(1.08);
+  }
+  66% {
+    transform: translate(-28px, 20px) scale(0.94);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blob,
+  .animate-blob-delayed,
+  .animate-blob-slow {
+    animation: none;
+  }
+  .text-gradient {
+    animation: none;
   }
 }
 

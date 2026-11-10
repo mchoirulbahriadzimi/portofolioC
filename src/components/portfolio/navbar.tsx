@@ -2,7 +2,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { Menu, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -35,6 +35,14 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("beranda");
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Progress bar scroll halus (navy → cyan).
+  const { scrollYProgress } = useScroll();
+  const scrollProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 26,
+    restDelta: 0.001,
+  });
 
   // Efek tampilan navbar ketika halaman di-scroll.
   useEffect(() => {
@@ -146,11 +154,15 @@ export function Navbar() {
           href="#beranda"
           aria-label="Kembali ke beranda"
           onClick={(event) => handleNavClick(event, "#beranda")}
-          className="flex min-h-11 items-center gap-2.5"
+          className="group flex min-h-11 items-center gap-2.5"
         >
-          <span className="flex size-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600 text-sm font-bold text-white shadow-md shadow-blue-500/20 dark:from-blue-400 dark:to-cyan-500 dark:text-blue-950">
+          <motion.span
+            whileHover={{ rotate: -8, scale: 1.08 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            className="flex size-9 items-center justify-center rounded-lg bg-gradient-to-br from-navy-700 via-navy-600 to-cyan-600 text-sm font-bold text-white shadow-md shadow-cyan-500/20 dark:from-navy-900 dark:via-cyan-500 dark:to-cyan-400 dark:text-navy-950"
+          >
             {profile.monogram}
-          </span>
+          </motion.span>
 
           <span className="hidden font-semibold tracking-tight sm:block">
             {profile.name}
@@ -172,13 +184,19 @@ export function Navbar() {
                   }
                   aria-current={isActive ? "location" : undefined}
                   className={cn(
-                    "inline-flex h-10 items-center rounded-full px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
+                    "relative inline-flex h-10 items-center rounded-full px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
                     isActive
-                      ? "bg-blue-500/10 text-blue-700 dark:text-blue-400"
+                      ? "bg-navy-500/10 text-navy-800 dark:bg-cyan-400/10 dark:text-cyan-300"
                       : "text-muted-foreground"
                   )}
                 >
                   {link.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active-dot"
+                      className="absolute -bottom-0.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-cyan-500 dark:bg-cyan-400"
+                    />
+                  )}
                 </a>
               </li>
             );
@@ -226,7 +244,7 @@ export function Navbar() {
             <SheetContent side="right" className="w-72">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2.5">
-                  <span className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600 text-xs font-bold text-white dark:from-blue-400 dark:to-cyan-500 dark:text-blue-950">
+                  <span className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-navy-700 via-navy-600 to-cyan-600 text-xs font-bold text-white dark:from-navy-900 dark:via-cyan-500 dark:to-cyan-400 dark:text-navy-950">
                     {profile.monogram}
                   </span>
 
@@ -259,7 +277,7 @@ export function Navbar() {
                       className={cn(
                         "flex h-11 items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-accent",
                         isActive &&
-                          "bg-blue-500/10 text-blue-700 dark:text-blue-400"
+                          "bg-navy-500/10 text-navy-800 dark:bg-cyan-400/10 dark:text-cyan-300"
                       )}
                     >
                       {link.label}
@@ -282,6 +300,13 @@ export function Navbar() {
           </Sheet>
         </div>
       </nav>
+
+      {/* Progress bar scroll (navy → cyan) */}
+      <motion.div
+        aria-hidden
+        style={{ scaleX: scrollProgress }}
+        className="absolute inset-x-0 -bottom-px h-0.5 origin-left bg-gradient-to-r from-navy-700 via-cyan-500 to-cyan-400 dark:from-cyan-500 dark:via-cyan-400 dark:to-navy-400"
+      />
     </motion.header>
   );
 }

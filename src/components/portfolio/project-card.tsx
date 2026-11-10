@@ -63,7 +63,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
       transition={{ duration: 0.5, ease: "easeOut", delay: (index % 3) * 0.08 }}
       className="h-full"
     >
-      <Card className="group flex h-full gap-0 overflow-hidden rounded-2xl border-border/70 p-0 transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-xl hover:shadow-blue-500/5">
+      <Card className="group flex h-full gap-0 overflow-hidden rounded-2xl border-border/70 p-0 transition-all duration-300 hover:-translate-y-1.5 hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10">
         {/* Gambar */}
         <div className="relative aspect-video w-full shrink-0 overflow-hidden bg-muted">
           {isOfficeDocument ? (
@@ -94,7 +94,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
           )}
           {/* Badge unggulan */}
           {project.featured ? (
-            <Badge className="absolute top-3 left-3 gap-1 rounded-full border-sky-400/30 bg-sky-400/90 text-sky-950 shadow-sm backdrop-blur">
+            <Badge className="absolute top-3 left-3 gap-1 rounded-full border-cyan-300/30 bg-cyan-400/90 text-cyan-950 shadow-sm backdrop-blur">
               <Star className="size-3 fill-current" />
               Unggulan
             </Badge>
@@ -104,8 +104,8 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
             className={cn(
               "absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium shadow-sm backdrop-blur",
               isDone
-                ? "border border-blue-400/30 bg-blue-500/90 text-white dark:text-blue-950"
-                : "border border-sky-400/40 bg-sky-400/90 text-sky-950"
+                ? "border border-cyan-300/40 bg-cyan-500/90 text-white dark:bg-cyan-400/90 dark:text-cyan-950"
+                : "border border-navy-400/40 bg-navy-700/90 text-white dark:bg-navy-600/90 dark:text-white"
             )}
           >
             <span className="size-1.5 rounded-full bg-current" />
@@ -116,7 +116,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
         {/* Konten */}
         <CardContent className="flex flex-1 flex-col gap-3 p-5">
           <div className="flex items-center justify-between gap-2">
-            <span className="text-xs font-semibold tracking-wider text-blue-600 uppercase dark:text-blue-400">
+            <span className="text-xs font-semibold tracking-wider text-navy-700 uppercase dark:text-cyan-300">
               {project.category}
             </span>
             <DropdownMenu>
@@ -160,7 +160,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
               </Badge>
             ))}
             {techs.length > 4 ? (
-              <Badge variant="outline" className="font-normal text-blue-600 dark:text-blue-400">
+              <Badge variant="outline" className="font-normal text-navy-700 dark:text-cyan-300">
                 +{techs.length - 4}
               </Badge>
             ) : null}

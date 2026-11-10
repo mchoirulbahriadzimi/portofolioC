@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { aboutHighlights, aboutParagraphs, profile } from "@/config/profile";
+import { openEmailCompose } from "@/lib/email";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -19,7 +20,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SectionHeading } from "./section-heading";
-import { fadeUp, staggerContainer, viewportOnce } from "./animations";
+import { fadeUp, slideInRight, staggerContainer, viewportOnce } from "./animations";
 
 interface InfoItem {
   icon: LucideIcon;
@@ -55,6 +56,12 @@ export function About() {
       value: profile.availability,
     },
   ];
+
+  // Email dibuka langsung ke aplikasi Gmail di ponsel.
+  const handleEmailClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    openEmailCompose({ to: profile.email });
+  };
 
   return (
     <section id="tentang" className="scroll-mt-20 py-20 sm:py-24">
@@ -96,24 +103,37 @@ export function About() {
                 Fokus utama:
               </span>
 
-              {aboutHighlights.map((tech) => (
-                <Badge
+              {aboutHighlights.map((tech, index) => (
+                <motion.span
                   key={tech}
-                  variant="secondary"
-                  className="rounded-full border-blue-500/20 bg-blue-500/10 text-blue-700 dark:text-blue-400"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={viewportOnce}
+                  transition={{
+                    delay: 0.15 + index * 0.06,
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 18,
+                  }}
+                  className="inline-flex"
                 >
-                  {tech}
-                </Badge>
+                  <Badge
+                    variant="secondary"
+                    className="rounded-full border-navy-500/20 bg-navy-500/10 text-navy-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-300"
+                  >
+                    {tech}
+                  </Badge>
+                </motion.span>
               ))}
             </motion.div>
           </motion.div>
 
           {/* Kartu info */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={slideInRight}
+            initial="hidden"
+            whileInView="visible"
             viewport={viewportOnce}
-            transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <Card className="h-full rounded-2xl border-border/70 p-6 shadow-sm sm:p-8">
               <CardHeader className="px-0">
@@ -123,12 +143,20 @@ export function About() {
               </CardHeader>
 
               <CardContent className="flex flex-col gap-3 px-0">
-                {infoItems.map((item) => (
-                  <div
+                {infoItems.map((item, index) => (
+                  <motion.div
                     key={item.label}
-                    className="flex items-center gap-4 rounded-xl border border-border/60 bg-background/40 p-4 transition-colors hover:border-blue-500/40"
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={viewportOnce}
+                    transition={{
+                      delay: 0.1 + index * 0.08,
+                      duration: 0.45,
+                      ease: "easeOut",
+                    }}
+                    className="flex items-center gap-4 rounded-xl border border-border/60 bg-background/40 p-4 transition-colors hover:border-cyan-500/40"
                   >
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-navy-500/10 text-navy-700 dark:bg-cyan-400/10 dark:text-cyan-300">
                       <item.icon className="size-5" />
                     </span>
 
@@ -140,13 +168,18 @@ export function About() {
                       {item.href ? (
                         <a
                           href={item.href}
+                          onClick={
+                            item.label === "Email"
+                              ? handleEmailClick
+                              : undefined
+                          }
                           target={item.external ? "_blank" : undefined}
                           rel={
                             item.external
                               ? "noopener noreferrer"
                               : undefined
                           }
-                          className="truncate text-sm font-semibold transition-colors hover:text-blue-600 dark:hover:text-blue-400"
+                          className="truncate text-sm font-semibold transition-colors hover:text-cyan-600 dark:hover:text-cyan-300"
                         >
                           {item.value}
                         </a>
@@ -156,7 +189,7 @@ export function About() {
                         </p>
                       )}
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </CardContent>
             </Card>

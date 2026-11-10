@@ -16,6 +16,7 @@ import {
 import { toast } from "sonner";
 
 import { profile, type SocialLink } from "@/config/profile";
+import { openEmailCompose } from "@/lib/email";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,7 +29,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { SectionHeading } from "./section-heading";
-import { fadeUp, staggerContainer, viewportOnce } from "./animations";
+import { fadeUp, hoverLift, staggerContainer, viewportOnce } from "./animations";
 
 const SOCIAL_ICONS: Record<SocialLink["icon"], LucideIcon> = {
   github: Github,
@@ -94,46 +95,26 @@ export function Contact() {
 
     setSending(true);
 
-    const subject = encodeURIComponent(
-      `Halo ${profile.name}, saya ${form.nama.trim()}`
-    );
+    openEmailCompose({
+      to: profile.email,
+      subject: `Halo ${profile.name}, saya ${form.nama.trim()}`,
+      body:
+        `Nama: ${form.nama.trim()}\n` +
+        `Email: ${form.email.trim()}\n\n` +
+        `${form.pesan.trim()}`,
+    });
 
-    const body = encodeURIComponent(
-      `Nama: ${form.nama.trim()}\n` +
-      `Email: ${form.email.trim()}\n\n` +
-      `${form.pesan.trim()}`
-    );
-
-    const gmailUrl =
-      `https://mail.google.com/mail/?view=cm&fs=1` +
-      `&to=${encodeURIComponent(profile.email)}` +
-      `&su=${subject}` +
-      `&body=${body}`;
-
-    const newWindow = window.open(
-      gmailUrl,
-      "_blank",
-      "noopener,noreferrer"
-    );
-
-    if (newWindow) {
-      toast.success("Gmail berhasil dibuka", {
-        description:
-          "Periksa kembali pesan Anda, kemudian tekan Kirim di Gmail.",
-      });
-    } else {
-      toast.error("Gmail tidak dapat dibuka", {
-        description:
-          "Izinkan pop-up pada browser atau gunakan tombol Email di bagian kontak.",
-      });
-    }
+    toast.success("Aplikasi email dibuka", {
+      description:
+        "Periksa kembali pesan Anda di Gmail, kemudian tekan Kirim.",
+    });
 
     setSending(false);
   };
 
-  const gmailComposeUrl =
-    `https://mail.google.com/mail/?view=cm&fs=1&to=` +
-    encodeURIComponent(profile.email);
+  const openEmailForProfile = () => {
+    openEmailCompose({ to: profile.email });
+  };
 
   const contactItems: {
     icon: LucideIcon;
@@ -141,13 +122,14 @@ export function Contact() {
     value: string;
     href: string;
     external?: boolean;
+    onClick?: () => void;
   }[] = [
     {
       icon: Mail,
       label: "Email",
       value: profile.email,
-      href: gmailComposeUrl,
-      external: true,
+      href: `mailto:${profile.email}`,
+      onClick: openEmailForProfile,
     },
     {
       icon: MessageCircle,
@@ -156,20 +138,20 @@ export function Contact() {
       href: profile.whatsappLink,
       external: true,
     },
-    
+
     {
       icon: MapPin,
       label: "Lokasi",
       value: profile.location,
-      href: "https://maps.app.goo.gl/nqYzf95zW2A7y1M79",
+      href: "https://maps.app.goo.gl/s6Lkg11nPHv9apo67?g_st=ac",
       external: true,
     },
-    
+
     {
       icon: Linkedin,
       label: "LinkedIn",
       value: "Lihat Profil LinkedIn",
-      href: "https://www.linkedin.com/in/alaik-bittuqoh-68b2b9259/",
+      href: "https://www.linkedin.com/in/choiral-bachri-adzimi-375aa5259",
       external: true,
     },
   ];
@@ -197,14 +179,27 @@ export function Contact() {
             className="flex flex-col gap-4 lg:col-span-2"
           >
             {contactItems.map((item) => (
-              <motion.div key={item.label} variants={fadeUp}>
+              <motion.div
+                key={item.label}
+                variants={fadeUp}
+                whileHover={{ x: 4 }}
+                transition={{ type: "spring", stiffness: 300, damping: 22 }}
+              >
                 <a
                   href={item.href}
                   target={item.external ? "_blank" : undefined}
                   rel={item.external ? "noopener noreferrer" : undefined}
-                  className="flex items-center gap-4 rounded-2xl border border-border/70 bg-card/60 p-4 transition-all hover:-translate-y-0.5 hover:border-blue-500/40 hover:shadow-md hover:shadow-blue-500/5"
+                  onClick={
+                    item.onClick
+                      ? (event) => {
+                          event.preventDefault();
+                          item.onClick?.();
+                        }
+                      : undefined
+                  }
+                  className="flex items-center gap-4 rounded-2xl border border-border/70 bg-card/60 p-4 transition-all hover:-translate-y-0.5 hover:border-cyan-500/40 hover:shadow-md hover:shadow-cyan-500/10"
                 >
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-navy-500/10 text-navy-700 transition-colors group-hover:bg-cyan-500/15 dark:bg-cyan-400/10 dark:text-cyan-300">
                     <item.icon className="size-5" />
                   </span>
 
@@ -231,26 +226,33 @@ export function Contact() {
                   const Icon = SOCIAL_ICONS[social.icon];
 
                   return (
-                    <Button
+                    <motion.span
                       key={social.label}
-                      variant="outline"
-                      size="icon"
-                      className="size-11 rounded-xl transition-colors hover:border-blue-500/50 hover:text-blue-600 dark:hover:text-blue-400"
-                      asChild
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.94 }}
+                      transition={hoverLift.transition}
+                      className="inline-flex"
                     >
-                      <a
-                        href={social.href}
-                        target={
-                          social.href.startsWith("http")
-                            ? "_blank"
-                            : undefined
-                        }
-                        rel="noopener noreferrer"
-                        aria-label={social.label}
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="size-11 rounded-xl transition-colors hover:border-cyan-500/50 hover:text-cyan-600 dark:hover:text-cyan-300"
+                        asChild
                       >
-                        <Icon className="size-5" />
-                      </a>
-                    </Button>
+                        <a
+                          href={social.href}
+                          target={
+                            social.href.startsWith("http")
+                              ? "_blank"
+                              : undefined
+                          }
+                          rel="noopener noreferrer"
+                          aria-label={social.label}
+                        >
+                          <Icon className="size-5" />
+                        </a>
+                      </Button>
+                    </motion.span>
                   );
                 })}
               </div>
@@ -272,8 +274,8 @@ export function Contact() {
                 </CardTitle>
 
                 <CardDescription>
-                  Isi formulir di bawah ini. Gmail akan terbuka
-                  dengan pesan yang sudah tersusun.
+                  Isi formulir di bawah ini. Di ponsel, aplikasi Gmail
+                  akan terbuka langsung dengan pesan yang sudah tersusun.
                 </CardDescription>
               </CardHeader>
 
@@ -353,15 +355,21 @@ export function Contact() {
                     )}
                   </div>
 
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="h-11 gap-2 shadow-lg shadow-blue-500/20"
-                    disabled={sending}
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="inline-flex"
                   >
-                    <Send className="size-4" />
-                    {sending ? "Membuka Gmail..." : "Kirim Pesan"}
-                  </Button>
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="h-11 w-full gap-2 bg-gradient-to-r from-navy-700 to-navy-800 shadow-lg shadow-cyan-500/25 transition-shadow hover:from-navy-800 hover:to-navy-900 hover:shadow-cyan-500/40 sm:w-auto dark:from-cyan-500 dark:to-cyan-600 dark:text-navy-950 dark:hover:from-cyan-400 dark:hover:to-cyan-500"
+                      disabled={sending}
+                    >
+                      <Send className="size-4" />
+                      {sending ? "Membuka Gmail..." : "Kirim Pesan"}
+                    </Button>
+                  </motion.div>
                 </form>
               </CardContent>
             </Card>

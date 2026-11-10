@@ -93,10 +93,10 @@ export default function OfficePreview({ fileUrl, fileName, extension }: Props) {
 
   return <div className="min-h-0 flex-1 overflow-auto bg-slate-100 p-3 sm:p-6">
     {status && <div className="mx-auto max-w-3xl rounded-xl bg-white p-8 text-center text-slate-600 shadow-sm">{status}</div>}
-    {error && <div className="mx-auto max-w-3xl rounded-xl border border-sky-200 bg-white p-6 text-center shadow-sm"><div className="mb-2 text-3xl">📄</div><h2 className="font-semibold text-slate-900">Belum dapat menampilkan dokumen</h2><p className="mt-2 text-sm text-slate-600">{error}</p><p className="mt-3 text-sm text-slate-500">Kamu tetap dapat mengunduh file melalui tombol Download di bagian atas.</p></div>}
+    {error && <div className="mx-auto max-w-3xl rounded-xl border border-navy-200 bg-white p-6 text-center shadow-sm"><div className="mb-2 text-3xl">📄</div><h2 className="font-semibold text-slate-900">Belum dapat menampilkan dokumen</h2><p className="mt-2 text-sm text-slate-600">{error}</p><p className="mt-3 text-sm text-slate-500">Kamu tetap dapat mengunduh file melalui tombol Download di bagian atas.</p></div>}
     {html && <article className="office-word mx-auto max-w-4xl bg-white p-8 shadow-sm sm:p-12" dangerouslySetInnerHTML={{ __html: html }} />}
     {sheets.length > 0 && <section className="mx-auto max-w-6xl rounded-xl bg-white p-4 shadow-sm sm:p-6">
-      <div className="mb-4 flex flex-wrap gap-2">{sheets.map((sheet, i) => <button key={sheet.name} onClick={() => setActiveSheet(i)} className={`rounded-lg px-4 py-2 text-sm ${activeSheet === i ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-700"}`}>{sheet.name}</button>)}</div>
+      <div className="mb-4 flex flex-wrap gap-2">{sheets.map((sheet, i) => <button key={sheet.name} onClick={() => setActiveSheet(i)} className={`rounded-lg px-4 py-2 text-sm ${activeSheet === i ? "bg-navy-700 text-white dark:bg-cyan-400 dark:text-cyan-950" : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200"}`}>{sheet.name}</button>)}</div>
       <div className="overflow-auto"><table className="min-w-full border-collapse text-sm"><tbody>{(sheets[activeSheet]?.rows || []).map((row, ri) => <tr key={ri}>{row.map((cell, ci) => <td key={ci} className="max-w-sm border border-slate-300 px-3 py-2 text-slate-800">{cell == null ? "" : String(cell)}</td>)}</tr>)}</tbody></table></div>
       <p className="mt-3 text-xs text-slate-500">Pratinjau menampilkan data sel. Tata letak, rumus interaktif, dan grafik kompleks mungkin berbeda dari Microsoft Excel.</p>
     </section>}

@@ -32,7 +32,7 @@ export function Footer() {
               aria-label="Kembali ke beranda"
               className="flex items-center gap-2.5"
             >
-              <span className="flex size-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600 text-sm font-bold text-white dark:from-blue-400 dark:to-cyan-500 dark:text-blue-950">
+              <span className="flex size-9 items-center justify-center rounded-lg bg-gradient-to-br from-navy-700 via-navy-600 to-cyan-600 text-sm font-bold text-white shadow-md shadow-cyan-500/20 dark:from-navy-900 dark:via-cyan-500 dark:to-cyan-400 dark:text-navy-950">
                 {profile.monogram}
               </span>
               <span className="font-semibold tracking-tight">{profile.name}</span>
@@ -50,7 +50,7 @@ export function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-blue-600 dark:hover:text-blue-400"
+                    className="text-sm text-muted-foreground transition-colors hover:text-cyan-600 dark:hover:text-cyan-300"
                   >
                     {link.label}
                   </a>
@@ -70,7 +70,7 @@ export function Footer() {
                     key={social.label}
                     variant="outline"
                     size="icon"
-                    className="size-10 rounded-xl transition-colors hover:border-blue-500/50 hover:text-blue-600 dark:hover:text-blue-400"
+                    className="size-10 rounded-xl transition-colors hover:border-cyan-500/50 hover:text-cyan-600 dark:hover:text-cyan-300"
                     asChild
                   >
                     <a

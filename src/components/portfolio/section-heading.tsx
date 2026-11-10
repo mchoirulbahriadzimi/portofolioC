@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-import { fadeUp, staggerContainer, viewportOnce } from "./animations";
+import { blurUp, fadeUp, staggerContainer, viewportOnce } from "./animations";
 
 interface SectionHeadingProps {
   /** Label kecil di atas judul, mis. "Tentang Saya" */
@@ -37,16 +37,16 @@ export function SectionHeading({
     >
       <motion.span
         variants={fadeUp}
-        className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3.5 py-1.5 text-xs font-medium uppercase tracking-wider text-blue-700 dark:text-blue-400"
+        className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1.5 text-xs font-medium uppercase tracking-wider text-cyan-700 dark:text-cyan-300"
       >
         <span className="relative flex size-1.5">
-          <span className="absolute inline-flex size-full animate-ping rounded-full bg-blue-500 opacity-75" />
-          <span className="relative inline-flex size-1.5 rounded-full bg-blue-500" />
+          <span className="absolute inline-flex size-full animate-ping rounded-full bg-cyan-500 opacity-75" />
+          <span className="relative inline-flex size-1.5 rounded-full bg-cyan-500" />
         </span>
         {kicker}
       </motion.span>
       <motion.h2
-        variants={fadeUp}
+        variants={blurUp}
         className="max-w-2xl text-3xl font-bold tracking-tight text-balance sm:text-4xl"
       >
         {title}
