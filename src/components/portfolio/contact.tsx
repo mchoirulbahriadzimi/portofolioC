@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, type FormEvent } from "react";
@@ -42,10 +43,17 @@ interface ContactFormState {
   pesan: string;
 }
 
-type ContactFormErrors = Partial<Record<keyof ContactFormState, string>>;
+type ContactFormErrors = Partial<
+  Record<keyof ContactFormState, string>
+>;
 
 export function Contact() {
-  const [form, setForm] = useState<ContactFormState>({ nama: "", email: "", pesan: "" });
+  const [form, setForm] = useState<ContactFormState>({
+    nama: "",
+    email: "",
+    pesan: "",
+  });
+
   const [errors, setErrors] = useState<ContactFormErrors>({});
   const [sending, setSending] = useState(false);
 
@@ -56,33 +64,76 @@ export function Contact() {
 
   const validate = (): ContactFormErrors => {
     const next: ContactFormErrors = {};
-    if (!form.nama.trim()) next.nama = "Nama wajib diisi";
+
+    if (!form.nama.trim()) {
+      next.nama = "Nama wajib diisi";
+    }
+
     if (!form.email.trim()) {
       next.email = "Email wajib diisi";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+    } else if (
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
+    ) {
       next.email = "Format email tidak valid";
     }
-    if (!form.pesan.trim()) next.pesan = "Pesan wajib diisi";
+
+    if (!form.pesan.trim()) {
+      next.pesan = "Pesan wajib diisi";
+    }
+
     return next;
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const nextErrors = validate();
     setErrors(nextErrors);
+
     if (Object.values(nextErrors).some(Boolean)) return;
 
-    const subject = encodeURIComponent(`Halo ${profile.name}, saya ${form.nama.trim()}`);
-    const body = encodeURIComponent(
-      `Nama: ${form.nama.trim()}\nEmail: ${form.email.trim()}\n\n${form.pesan.trim()}`
-    );
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
-    toast.info("Membuka aplikasi email...", {
-      description: "Pesan Anda akan terkirim melalui aplikasi email bawaan.",
-    });
     setSending(true);
-    window.setTimeout(() => setSending(false), 1200);
+
+    const subject = encodeURIComponent(
+      `Halo ${profile.name}, saya ${form.nama.trim()}`
+    );
+
+    const body = encodeURIComponent(
+      `Nama: ${form.nama.trim()}\n` +
+      `Email: ${form.email.trim()}\n\n` +
+      `${form.pesan.trim()}`
+    );
+
+    const gmailUrl =
+      `https://mail.google.com/mail/?view=cm&fs=1` +
+      `&to=${encodeURIComponent(profile.email)}` +
+      `&su=${subject}` +
+      `&body=${body}`;
+
+    const newWindow = window.open(
+      gmailUrl,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+    if (newWindow) {
+      toast.success("Gmail berhasil dibuka", {
+        description:
+          "Periksa kembali pesan Anda, kemudian tekan Kirim di Gmail.",
+      });
+    } else {
+      toast.error("Gmail tidak dapat dibuka", {
+        description:
+          "Izinkan pop-up pada browser atau gunakan tombol Email di bagian kontak.",
+      });
+    }
+
+    setSending(false);
   };
+
+  const gmailComposeUrl =
+    `https://mail.google.com/mail/?view=cm&fs=1&to=` +
+    encodeURIComponent(profile.email);
 
   const contactItems: {
     icon: LucideIcon;
@@ -95,7 +146,8 @@ export function Contact() {
       icon: Mail,
       label: "Email",
       value: profile.email,
-      href: `mailto:${profile.email}`,
+      href: gmailComposeUrl,
+      external: true,
     },
     {
       icon: MessageCircle,
@@ -104,18 +156,20 @@ export function Contact() {
       href: profile.whatsappLink,
       external: true,
     },
+    
     {
       icon: MapPin,
       label: "Lokasi",
       value: profile.location,
-      href: "https://maps.google.com/?q=Jakarta,Indonesia",
+      href: "https://maps.app.goo.gl/nqYzf95zW2A7y1M79",
       external: true,
     },
+    
     {
       icon: Linkedin,
       label: "LinkedIn",
-      value: "linkedin.com/in/username",
-      href: "https://linkedin.com/in/username",
+      value: "Lihat Profil LinkedIn",
+      href: "https://www.linkedin.com/in/alaik-bittuqoh-68b2b9259/",
       external: true,
     },
   ];
@@ -130,7 +184,7 @@ export function Contact() {
               Mari <span className="text-gradient">Bekerja Sama</span>
             </>
           }
-          description="Punya tawaran kerja, proyek lepas, atau sekadar ingin berdiskusi? Jangan ragu untuk menghubungi saya."
+          description="Saya terbuka untuk berbagai kesempatan karier di bidang teknologi informasi, khususnya pengembangan website, aplikasi, dan software. Jika Anda memiliki peluang kerja, ingin berkolaborasi dalam proyek, atau sekadar berdiskusi mengenai teknologi, saya akan senang untuk terhubung dan mengenal lebih jauh."
         />
 
         <div className="mt-12 grid gap-8 lg:mt-16 lg:grid-cols-5 lg:gap-10">
@@ -147,16 +201,18 @@ export function Contact() {
                 <a
                   href={item.href}
                   target={item.external ? "_blank" : undefined}
-                  rel="noreferrer"
-                  className="flex items-center gap-4 rounded-2xl border border-border/70 bg-card/60 p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-500/40 hover:shadow-md hover:shadow-emerald-500/5"
+                  rel={item.external ? "noopener noreferrer" : undefined}
+                  className="flex items-center gap-4 rounded-2xl border border-border/70 bg-card/60 p-4 transition-all hover:-translate-y-0.5 hover:border-blue-500/40 hover:shadow-md hover:shadow-blue-500/5"
                 >
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
                     <item.icon className="size-5" />
                   </span>
+
                   <span className="min-w-0">
                     <span className="block text-xs uppercase tracking-wider text-muted-foreground">
                       {item.label}
                     </span>
+
                     <span className="block truncate text-sm font-semibold">
                       {item.value}
                     </span>
@@ -166,22 +222,30 @@ export function Contact() {
             ))}
 
             <motion.div variants={fadeUp} className="mt-2">
-              <p className="mb-3 text-sm font-medium">Temukan saya di</p>
+              <p className="mb-3 text-sm font-medium">
+                Temukan saya di
+              </p>
+
               <div className="flex items-center gap-2">
                 {profile.socials.map((social) => {
                   const Icon = SOCIAL_ICONS[social.icon];
+
                   return (
                     <Button
                       key={social.label}
                       variant="outline"
                       size="icon"
-                      className="size-11 rounded-xl transition-colors hover:border-emerald-500/50 hover:text-emerald-600 dark:hover:text-emerald-400"
+                      className="size-11 rounded-xl transition-colors hover:border-blue-500/50 hover:text-blue-600 dark:hover:text-blue-400"
                       asChild
                     >
                       <a
                         href={social.href}
-                        target={social.href.startsWith("http") ? "_blank" : undefined}
-                        rel="noreferrer"
+                        target={
+                          social.href.startsWith("http")
+                            ? "_blank"
+                            : undefined
+                        }
+                        rel="noopener noreferrer"
                         aria-label={social.label}
                       >
                         <Icon className="size-5" />
@@ -203,71 +267,100 @@ export function Contact() {
           >
             <Card className="h-full rounded-2xl border-border/70 p-6 sm:p-8">
               <CardHeader className="px-0">
-                <CardTitle className="text-lg">Kirim Pesan</CardTitle>
+                <CardTitle className="text-lg">
+                  Kirim Pesan
+                </CardTitle>
+
                 <CardDescription>
-                  Isi formulir di bawah — tombol kirim akan membuka aplikasi
-                  email Anda dengan pesan yang sudah tersusun.
+                  Isi formulir di bawah ini. Gmail akan terbuka
+                  dengan pesan yang sudah tersusun.
                 </CardDescription>
               </CardHeader>
+
               <CardContent className="px-0">
-                <form onSubmit={handleSubmit} className="grid gap-4" noValidate>
+                <form
+                  onSubmit={handleSubmit}
+                  className="grid gap-4"
+                  noValidate
+                >
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="grid gap-2">
                       <Label htmlFor="contact-nama">
                         Nama <span className="text-destructive">*</span>
                       </Label>
+
                       <Input
                         id="contact-nama"
                         placeholder="Nama lengkap Anda"
                         value={form.nama}
-                        onChange={(e) => setField("nama", e.target.value)}
+                        onChange={(e) =>
+                          setField("nama", e.target.value)
+                        }
                         aria-invalid={Boolean(errors.nama)}
                       />
-                      {errors.nama ? (
-                        <p className="text-xs text-destructive">{errors.nama}</p>
-                      ) : null}
+
+                      {errors.nama && (
+                        <p className="text-xs text-destructive">
+                          {errors.nama}
+                        </p>
+                      )}
                     </div>
+
                     <div className="grid gap-2">
                       <Label htmlFor="contact-email">
                         Email <span className="text-destructive">*</span>
                       </Label>
+
                       <Input
                         id="contact-email"
                         type="email"
                         placeholder="nama@contoh.com"
                         value={form.email}
-                        onChange={(e) => setField("email", e.target.value)}
+                        onChange={(e) =>
+                          setField("email", e.target.value)
+                        }
                         aria-invalid={Boolean(errors.email)}
                       />
-                      {errors.email ? (
-                        <p className="text-xs text-destructive">{errors.email}</p>
-                      ) : null}
+
+                      {errors.email && (
+                        <p className="text-xs text-destructive">
+                          {errors.email}
+                        </p>
+                      )}
                     </div>
                   </div>
+
                   <div className="grid gap-2">
                     <Label htmlFor="contact-pesan">
                       Pesan <span className="text-destructive">*</span>
                     </Label>
+
                     <Textarea
                       id="contact-pesan"
                       rows={5}
                       placeholder="Ceritakan tentang tawaran kerja atau proyek Anda..."
                       value={form.pesan}
-                      onChange={(e) => setField("pesan", e.target.value)}
+                      onChange={(e) =>
+                        setField("pesan", e.target.value)
+                      }
                       aria-invalid={Boolean(errors.pesan)}
                     />
-                    {errors.pesan ? (
-                      <p className="text-xs text-destructive">{errors.pesan}</p>
-                    ) : null}
+
+                    {errors.pesan && (
+                      <p className="text-xs text-destructive">
+                        {errors.pesan}
+                      </p>
+                    )}
                   </div>
+
                   <Button
                     type="submit"
                     size="lg"
-                    className="h-11 gap-2 shadow-lg shadow-emerald-500/20"
+                    className="h-11 gap-2 shadow-lg shadow-blue-500/20"
                     disabled={sending}
                   >
                     <Send className="size-4" />
-                    Kirim Pesan
+                    {sending ? "Membuka Gmail..." : "Kirim Pesan"}
                   </Button>
                 </form>
               </CardContent>

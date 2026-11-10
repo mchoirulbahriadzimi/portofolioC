@@ -63,9 +63,9 @@ export function Skills() {
                 variants={fadeUp}
                 className="h-full"
               >
-                <Card className="group flex h-full flex-col items-center rounded-2xl border-border/70 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:shadow-lg hover:shadow-emerald-500/5">
+                <Card className="group flex h-full flex-col items-center rounded-2xl border-border/70 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5">
                   <CardHeader className="flex w-full flex-col items-center px-0 text-center">
-                    <span className="mb-3 flex size-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 transition-transform group-hover:scale-110 dark:text-emerald-400">
+                    <span className="mb-3 flex size-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 transition-transform group-hover:scale-110 dark:text-blue-400">
                       <Icon className="size-5" />
                     </span>
 

@@ -62,21 +62,21 @@ export function Stats({ projectCount }: StatsProps) {
       value: 0,
       suffix: "+",
       icon: Clock3,
-      iconClassName: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+      iconClassName: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
     },
     {
       label: "Proyek Selesai",
       value: projectCount,
       suffix: "+",
       icon: FolderCheck,
-      iconClassName: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
+      iconClassName: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
     },
     {
       label: "Penghargaan & Sertifikat",
       value: 1,
       suffix: "",
       icon: Award,
-      iconClassName: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+      iconClassName: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
     },
   ];
 
@@ -99,7 +99,7 @@ export function Stats({ projectCount }: StatsProps) {
                 variants={fadeUp}
                 className="flex h-full"
               >
-                <Card className="group flex w-full flex-col items-center justify-center gap-4 rounded-2xl border-border/70 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:shadow-lg hover:shadow-emerald-500/5 sm:p-8">
+                <Card className="group flex w-full flex-col items-center justify-center gap-4 rounded-2xl border-border/70 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 sm:p-8">
                   <span
                     className={`flex size-14 shrink-0 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 ${stat.iconClassName}`}
                   >

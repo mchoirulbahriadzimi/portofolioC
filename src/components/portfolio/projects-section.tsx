@@ -270,7 +270,7 @@ export function ProjectsSection({
   return (
     <section
       id="proyek"
-      className="scroll-mt-20 py-20 sm:py-24"
+      className="scroll-mt-16 py-20 sm:py-24"
     >
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6">
@@ -283,7 +283,7 @@ export function ProjectsSection({
                   Proyek <span className="text-gradient">Pilihan</span>
                 </>
               }
-              description="Kumpulan karya yang pernah saya bangun — mulai dari web app, mobile app, hingga eksperimen AI."
+              description="Kumpulan karya yang pernah saya bangun — mulai dari web app, mobile app, hingga microsoft office."
               className="max-w-xl"
             />
 
@@ -295,7 +295,7 @@ export function ProjectsSection({
             >
               <Button
                 size="lg"
-                className="h-11 gap-2 shadow-lg shadow-emerald-500/20"
+                className="h-11 gap-2 shadow-lg shadow-blue-500/20"
                 onClick={openCreate}
               >
                 <Plus className="size-4" />
@@ -364,8 +364,8 @@ export function ProjectsSection({
                     onClick={() => handleCategoryChange(item)}
                     className={`inline-flex h-9 items-center rounded-full border px-4 text-sm font-medium transition-all ${
                       active
-                        ? "border-primary bg-primary text-primary-foreground shadow-md shadow-emerald-500/20"
-                        : "border-border bg-card text-muted-foreground hover:border-emerald-500/40 hover:text-foreground"
+                        ? "border-primary bg-primary text-primary-foreground shadow-md shadow-blue-500/20"
+                        : "border-border bg-card text-muted-foreground hover:border-blue-500/40 hover:text-foreground"
                     }`}
                   >
                     {item}
@@ -398,8 +398,8 @@ export function ProjectsSection({
                           onClick={() => setSubcategory(item)}
                           className={`inline-flex min-h-10 items-center justify-center rounded-full border px-5 py-2 text-sm font-semibold transition-all duration-200 ${
                           active
-                            ? "border-emerald-600 bg-emerald-600 text-white shadow-md shadow-emerald-500/20"
-                            : "border-border bg-transparent text-muted-foreground hover:border-emerald-500 hover:text-emerald-600"
+                            ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                            : "border-border bg-transparent text-muted-foreground hover:border-blue-500 hover:text-blue-600"
                         }`}
                         >
                           {item}
@@ -448,7 +448,7 @@ export function ProjectsSection({
             >
               <Card className="rounded-3xl border-dashed">
                 <CardContent className="flex flex-col items-center gap-4 p-12 text-center">
-                  <span className="flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500/15 to-amber-400/15 text-emerald-600 dark:text-emerald-400">
+                  <span className="flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/15 to-sky-400/15 text-blue-600 dark:text-blue-400">
                     <FolderOpen className="size-9" />
                   </span>
 
@@ -478,7 +478,7 @@ export function ProjectsSection({
             >
               <Card className="rounded-3xl border-dashed">
                 <CardContent className="flex flex-col items-center gap-4 p-12 text-center">
-                  <span className="flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500/15 to-amber-400/15 text-emerald-600 dark:text-emerald-400">
+                  <span className="flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/15 to-sky-400/15 text-blue-600 dark:text-blue-400">
                     <SearchX className="size-9" />
                   </span>
 

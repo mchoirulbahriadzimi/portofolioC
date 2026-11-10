@@ -18,34 +18,35 @@ export const profile = {
   /** Inisial untuk logo/monogram di navbar */
   monogram: "AB",
 
-  roleLine: "Full-Stack Developer | Web & Mobile",
+  roleLine: "Informatika Graduate | Aspiring Full-Stack Developer",
 
   tagline:
-    "Saya membangun aplikasi web & mobile yang cepat, rapi, dan berdampak — dari ide, desain, hingga rilis. Saat ini saya terbuka untuk kesempatan kerja full-time maupun kontrak.",
+    "Saya adalah lulusan S1 Informatika yang memiliki minat di bidang pengembangan website, aplikasi, dan teknologi informasi. Memiliki pengalaman dalam membangun proyek aplikasi berbasis web dan game edukasi, serta praktik langsung di bidang jaringan komputer. Didukung sertifikasi BNSP Junior Cyber Security, saya memiliki semangat untuk terus belajar, mengembangkan keterampilan, dan berkontribusi melalui solusi teknologi yang inovatif. Saat ini, saya terbuka untuk kesempatan kerja full-time maupun kontrak.",
 
-  location: "Jakarta, Indonesia",
+  location: "Porong, Sidoarjo",
 
-  email: "halo@namadev.id",
+  email: "alaikbittuqoh@gmail.com",
 
-  whatsappDisplay: "+62 812-3456-7890",
+  whatsappDisplay: "+62 895-1897-3236",
 
-  whatsappLink: "https://wa.me/6281234567890",
+  whatsappLink: "https://wa.me/6289518973236",
 
-  education: "S1 Teknik Informatika",
+  education: "S1 Informatika",
 
   availability: "Terbuka untuk kerja",
 
   avatar: "/images/projects/Profile.png",
 
+  
   socials: [
     {
       label: "GitHub",
-      href: "https://github.com/username",
+      href: "https://github.com/ALAIKBITTUQOH",
       icon: "github",
     },
     {
       label: "LinkedIn",
-      href: "https://linkedin.com/in/username",
+      href: "https://www.linkedin.com/in/alaik-bittuqoh-68b2b9259/",
       icon: "linkedin",
     },
     {
@@ -55,28 +56,29 @@ export const profile = {
     },
     {
       label: "Email",
-      href: "mailto:halo@namadev.id",
+      href: "https://mail.google.com/mail/?view=cm&fs=1&to=alaikbittuqoh@gmail.com",
       icon: "mail",
     },
   ] satisfies SocialLink[],
+
 };
 
 /** Paragraf pada bagian Tentang Saya. */
 export const aboutParagraphs = [
-  `Halo! Saya ${profile.name}, seorang full-stack developer yang berbasis di ${profile.location}. Saya senang mengubah ide menjadi produk digital yang nyata — mulai dari merancang antarmuka yang enak dipakai, membangun API yang andal, hingga mengurus deployment.`,
+  `Halo! Saya Alaik Bittuqoh, lulusan S1 Informatika dari Universitas Nahdlatul Ulama Sidoarjo yang berdomisili di Porong, Sidoarjo. Saya memiliki ketertarikan pada bidang pengembangan website, aplikasi, dan teknologi informasi.`,
 
-  "Sebagai fresh graduate Teknik Informatika dengan 3+ tahun pengalaman membangun proyek nyata, saya terbiasa bekerja dengan React, Next.js, Node.js, dan berbagai tool modern. Saya percaya kode yang baik adalah kode yang mudah dibaca, dipelihara, dan dikembangkan bersama tim.",
+  "Selama masa perkuliahan, saya telah mengembangkan beberapa proyek akademik, di antaranya website portofolio pribadi dan game edukasi pengenalan kendaraan untuk anak usia 2–4 tahun menggunakan Unity. Saya juga memiliki pengalaman Praktik Kerja Lapangan di RSUD R.T. Notopuro Sidoarjo, dengan kegiatan yang berfokus pada simulasi, instalasi, dan pengujian jaringan komputer. Selain itu, saya memiliki sertifikasi kompetensi BNSP di bidang Keamanan Siber Muda (Junior Cyber Security).",
 
-  "Saat ini saya sedang mencari kesempatan kerja — full-time, kontrak, maupun proyek lepas. Jika Anda mencari developer yang antusias, cepat belajar, dan tidak takut tantangan baru, mari terhubung!",
+  "Saya merupakan pribadi yang teliti, bertanggung jawab, mampu bekerja secara mandiri maupun dalam tim, serta memiliki semangat untuk terus belajar dan mengembangkan keterampilan. Saat ini, saya terbuka terhadap kesempatan kerja full-time maupun kontrak untuk mengembangkan potensi dan memberikan kontribusi positif di lingkungan kerja profesional.",
 ];
 
 /** Teknologi yang ditampilkan pada bagian Tentang Saya. */
 export const aboutHighlights = [
-  "React",
+  "HTML",
+  "Java Script",
   "Next.js",
   "Node.js",
   "TypeScript",
-  "PostgreSQL",
   "Tailwind CSS",
 ];
 
@@ -130,8 +132,6 @@ export const PROJECT_SUBCATEGORIES: Record<ProjectCategory, string[]> = {
     "Microsoft Word",
     "Microsoft Excel",
     "Microsoft PowerPoint",
-    "Microsoft Access",
-    "Microsoft Outlook",
     "PDF",
   ],
 };

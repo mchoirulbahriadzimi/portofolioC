@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Navbar } from "@/components/portfolio/navbar";
@@ -12,20 +13,40 @@ import { useProjects } from "@/hooks/use-projects";
 
 /**
  * Halaman tunggal portofolio (Bahasa Indonesia).
- * Seluruh konten client-side; data proyek diambil dari /api/projects.
+ * Data proyek diambil dari /api/projects.
  */
 export default function Home() {
-  const { projects, loading, error, refresh, addProject, updateProject, deleteProject } =
-    useProjects();
+  const {
+    projects,
+    loading,
+    error,
+    refresh,
+    addProject,
+    updateProject,
+    deleteProject,
+  } = useProjects();
+
+  // Menghitung jumlah proyek yang berstatus Selesai
+  const completedProjectCount = projects.filter(
+    (project) =>
+      project.status?.trim().toLowerCase() === "selesai"
+  ).length;
 
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
+
       <main className="flex-1">
-        <Hero projectCount={projects.length} />
-        <Stats projectCount={projects.length} />
+        {/* Badge jumlah proyek pada foto profil */}
+        <Hero projectCount={completedProjectCount} />
+
+        {/* Statistik jumlah proyek selesai */}
+        <Stats projectCount={completedProjectCount} />
+
         <About />
+
         <Skills />
+
         <ProjectsSection
           projects={projects}
           loading={loading}
@@ -35,8 +56,10 @@ export default function Home() {
           onUpdate={updateProject}
           onDelete={deleteProject}
         />
+
         <Contact />
       </main>
+
       <Footer />
     </div>
   );

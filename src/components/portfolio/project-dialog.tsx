@@ -769,14 +769,14 @@ export function ProjectDialog({
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={processingFile}
-                  className="flex min-h-28 w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-background/50 p-4 text-sm text-muted-foreground transition-colors hover:border-emerald-500/50 hover:bg-emerald-500/5 disabled:cursor-wait disabled:opacity-70"
+                  className="flex min-h-28 w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-background/50 p-4 text-sm text-muted-foreground transition-colors hover:border-blue-500/50 hover:bg-blue-500/5 disabled:cursor-wait disabled:opacity-70"
                 >
                   {processingFile ? (
-                    <Loader2 className="size-5 animate-spin text-emerald-500" />
+                    <Loader2 className="size-5 animate-spin text-blue-500" />
                   ) : officeCategory ? (
-                    <FileText className="size-6 text-emerald-500" />
+                    <FileText className="size-6 text-blue-500" />
                   ) : (
-                    <ImagePlus className="size-5 text-emerald-500" />
+                    <ImagePlus className="size-5 text-blue-500" />
                   )}
 
                   <span>
@@ -849,7 +849,7 @@ export function ProjectDialog({
                     className="h-16 w-20 shrink-0 rounded-lg object-cover"
                   />
                 ) : (
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
                     <ImagePlus className="size-5" />
                   </span>
                 )}
@@ -922,7 +922,7 @@ export function ProjectDialog({
           {/* Proyek unggulan */}
           <div className="flex items-center justify-between gap-4 rounded-xl border border-border/70 p-4">
             <div className="flex items-center gap-3">
-              <span className="flex size-9 items-center justify-center rounded-lg bg-amber-400/15 text-amber-600 dark:text-amber-400">
+              <span className="flex size-9 items-center justify-center rounded-lg bg-sky-400/15 text-sky-600 dark:text-sky-400">
                 <Star className="size-4" />
               </span>
 

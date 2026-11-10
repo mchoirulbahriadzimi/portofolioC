@@ -148,7 +148,7 @@ export function Navbar() {
           onClick={(event) => handleNavClick(event, "#beranda")}
           className="flex min-h-11 items-center gap-2.5"
         >
-          <span className="flex size-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 text-sm font-bold text-white shadow-md shadow-emerald-500/20 dark:from-emerald-400 dark:to-teal-500 dark:text-emerald-950">
+          <span className="flex size-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600 text-sm font-bold text-white shadow-md shadow-blue-500/20 dark:from-blue-400 dark:to-cyan-500 dark:text-blue-950">
             {profile.monogram}
           </span>
 
@@ -174,7 +174,7 @@ export function Navbar() {
                   className={cn(
                     "inline-flex h-10 items-center rounded-full px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
                     isActive
-                      ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+                      ? "bg-blue-500/10 text-blue-700 dark:text-blue-400"
                       : "text-muted-foreground"
                   )}
                 >
@@ -226,7 +226,7 @@ export function Navbar() {
             <SheetContent side="right" className="w-72">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2.5">
-                  <span className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 text-xs font-bold text-white dark:from-emerald-400 dark:to-teal-500 dark:text-emerald-950">
+                  <span className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600 text-xs font-bold text-white dark:from-blue-400 dark:to-cyan-500 dark:text-blue-950">
                     {profile.monogram}
                   </span>
 
@@ -259,7 +259,7 @@ export function Navbar() {
                       className={cn(
                         "flex h-11 items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-accent",
                         isActive &&
-                          "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+                          "bg-blue-500/10 text-blue-700 dark:text-blue-400"
                       )}
                     >
                       {link.label}

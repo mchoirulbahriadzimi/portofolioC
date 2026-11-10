@@ -1,3 +1,4 @@
+
 "use client";
 
 import { motion } from "framer-motion";
@@ -25,19 +26,34 @@ interface InfoItem {
   label: string;
   value: string;
   href?: string;
+  external?: boolean;
 }
 
 export function About() {
   const infoItems: InfoItem[] = [
-    { icon: MapPin, label: "Lokasi", value: profile.location },
+    {
+      icon: MapPin,
+      label: "Lokasi",
+      value: profile.location,
+      href: "https://maps.app.goo.gl/nqYzf95zW2A7y1M79",
+      external: true,
+    },
     {
       icon: Mail,
       label: "Email",
       value: profile.email,
       href: `mailto:${profile.email}`,
     },
-    { icon: GraduationCap, label: "Pendidikan", value: profile.education },
-    { icon: BadgeCheck, label: "Status", value: profile.availability },
+    {
+      icon: GraduationCap,
+      label: "Pendidikan",
+      value: profile.education,
+    },
+    {
+      icon: BadgeCheck,
+      label: "Status",
+      value: profile.availability,
+    },
   ];
 
   return (
@@ -50,7 +66,7 @@ export function About() {
               Kenalan dengan <span className="text-gradient">Saya</span>
             </>
           }
-          description="Sedikit cerita tentang siapa saya, apa yang saya kerjakan, dan mengapa saya cocok untuk tim Anda."
+          description="Sedikit cerita tentang latar belakang, pengalaman, dan ketertarikan saya di bidang teknologi informasi."
         />
 
         <div className="mt-12 grid gap-10 lg:mt-16 lg:grid-cols-2 lg:gap-14">
@@ -72,13 +88,19 @@ export function About() {
               </motion.p>
             ))}
 
-            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2 pt-2">
-              <span className="text-sm font-medium text-foreground">Fokus utama:</span>
+            <motion.div
+              variants={fadeUp}
+              className="flex flex-wrap items-center gap-2 pt-2"
+            >
+              <span className="text-sm font-medium text-foreground">
+                Fokus utama:
+              </span>
+
               {aboutHighlights.map((tech) => (
                 <Badge
                   key={tech}
                   variant="secondary"
-                  className="rounded-full border-emerald-500/20 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+                  className="rounded-full border-blue-500/20 bg-blue-500/10 text-blue-700 dark:text-blue-400"
                 >
                   {tech}
                 </Badge>
@@ -95,30 +117,43 @@ export function About() {
           >
             <Card className="h-full rounded-2xl border-border/70 p-6 shadow-sm sm:p-8">
               <CardHeader className="px-0">
-                <CardTitle className="text-lg">Informasi Singkat</CardTitle>
+                <CardTitle className="text-lg">
+                  Informasi Singkat
+                </CardTitle>
               </CardHeader>
+
               <CardContent className="flex flex-col gap-3 px-0">
                 {infoItems.map((item) => (
                   <div
                     key={item.label}
-                    className="flex items-center gap-4 rounded-xl border border-border/60 bg-background/40 p-4 transition-colors hover:border-emerald-500/40"
+                    className="flex items-center gap-4 rounded-xl border border-border/60 bg-background/40 p-4 transition-colors hover:border-blue-500/40"
                   >
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
                       <item.icon className="size-5" />
                     </span>
+
                     <div className="min-w-0">
                       <p className="text-xs uppercase tracking-wider text-muted-foreground">
                         {item.label}
                       </p>
+
                       {item.href ? (
                         <a
                           href={item.href}
-                          className="truncate text-sm font-semibold hover:text-emerald-600 dark:hover:text-emerald-400"
+                          target={item.external ? "_blank" : undefined}
+                          rel={
+                            item.external
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
+                          className="truncate text-sm font-semibold transition-colors hover:text-blue-600 dark:hover:text-blue-400"
                         >
                           {item.value}
                         </a>
                       ) : (
-                        <p className="truncate text-sm font-semibold">{item.value}</p>
+                        <p className="truncate text-sm font-semibold">
+                          {item.value}
+                        </p>
                       )}
                     </div>
                   </div>
