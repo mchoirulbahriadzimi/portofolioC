@@ -36,7 +36,7 @@ export function About() {
       icon: MapPin,
       label: "Lokasi",
       value: profile.location,
-      href: "https://maps.app.goo.gl/nqYzf95zW2A7y1M79",
+      href: "https://maps.app.goo.gl/eSF2Tz6GSgBvzTzb7?g_st=ac",
       external: true,
     },
     {
