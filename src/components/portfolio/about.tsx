@@ -30,7 +30,7 @@ export function About() {
       icon: MapPin,
       label: "Lokasi",
       value: profile.location,
-      href: "https://maps.app.goo.gl/eSF2Tz6GSgBvzTzb7?g_st=ac",
+      href: "https://maps.app.goo.gl/7aih3FZaNN2Gvy2P6?g_st=ac",
       external: true,
     },
     {

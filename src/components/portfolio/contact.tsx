@@ -143,7 +143,7 @@ export function Contact() {
       icon: MapPin,
       label: "Lokasi",
       value: profile.location,
-      href: "https://maps.app.goo.gl/s6Lkg11nPHv9apo67?g_st=ac",
+      href: "https://maps.app.goo.gl/7aih3FZaNN2Gvy2P6?g_st=ac",
       external: true,
     },
 
