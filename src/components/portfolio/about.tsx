@@ -13,12 +13,6 @@ import {
 import { aboutHighlights, aboutParagraphs, profile } from "@/config/profile";
 import { openEmailCompose } from "@/lib/email";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { SectionHeading } from "./section-heading";
 import { fadeUp, slideInRight, staggerContainer, viewportOnce } from "./animations";
 
@@ -64,9 +58,11 @@ export function About() {
   };
 
   return (
-    <section id="tentang" className="scroll-mt-20 py-20 sm:py-24">
+    <section id="tentang" className="scroll-mt-24 py-20 sm:py-24">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
+          index={1}
+          align="left"
           kicker="Tentang Saya"
           title={
             <>
@@ -99,7 +95,7 @@ export function About() {
               variants={fadeUp}
               className="flex flex-wrap items-center gap-2 pt-2"
             >
-              <span className="text-sm font-medium text-foreground">
+              <span className="mr-1 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">
                 Fokus utama:
               </span>
 
@@ -119,8 +115,9 @@ export function About() {
                 >
                   <Badge
                     variant="secondary"
-                    className="rounded-full border-navy-500/20 bg-navy-500/10 text-navy-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-300"
+                    className="gap-1.5 rounded-full border border-ember-500/25 bg-ember-500/10 text-ember-800 dark:border-ember-400/25 dark:bg-ember-400/10 dark:text-ember-200"
                   >
+                    <span className="size-1.5 rounded-full bg-ember-500" aria-hidden />
                     {tech}
                   </Badge>
                 </motion.span>
@@ -134,15 +131,24 @@ export function About() {
             initial="hidden"
             whileInView="visible"
             viewport={viewportOnce}
+            className="relative"
           >
-            <Card className="h-full rounded-2xl border-border/70 p-6 shadow-sm sm:p-8">
-              <CardHeader className="px-0">
-                <CardTitle className="text-lg">
-                  Informasi Singkat
-                </CardTitle>
-              </CardHeader>
+            {/* Aksen sudut editorial */}
+            <span
+              aria-hidden
+              className="absolute -top-3 -left-3 h-14 w-14 rounded-tl-3xl border-l-2 border-t-2 border-ember-500/50"
+            />
+            <span
+              aria-hidden
+              className="absolute -bottom-3 -right-3 h-14 w-14 rounded-br-3xl border-b-2 border-r-2 border-ember-500/50"
+            />
 
-              <CardContent className="flex flex-col gap-3 px-0">
+            <div className="flex h-full flex-col gap-3 rounded-3xl border border-border/70 bg-card/70 p-6 shadow-sm sm:p-8">
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                Informasi Singkat
+              </p>
+
+              <div className="mt-2 flex flex-col divide-y divide-border/60">
                 {infoItems.map((item, index) => (
                   <motion.div
                     key={item.label}
@@ -154,14 +160,14 @@ export function About() {
                       duration: 0.45,
                       ease: "easeOut",
                     }}
-                    className="flex items-center gap-4 rounded-xl border border-border/60 bg-background/40 p-4 transition-colors hover:border-cyan-500/40"
+                    className="group flex items-center gap-4 py-3.5 transition-colors"
                   >
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-navy-500/10 text-navy-700 dark:bg-cyan-400/10 dark:text-cyan-300">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-ember-500/25 bg-ember-500/10 text-ember-700 transition-transform group-hover:scale-105 dark:border-ember-400/25 dark:bg-ember-400/10 dark:text-ember-300">
                       <item.icon className="size-5" />
                     </span>
 
                     <div className="min-w-0">
-                      <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
                         {item.label}
                       </p>
 
@@ -179,7 +185,7 @@ export function About() {
                               ? "noopener noreferrer"
                               : undefined
                           }
-                          className="truncate text-sm font-semibold transition-colors hover:text-cyan-600 dark:hover:text-cyan-300"
+                          className="truncate text-sm font-semibold transition-colors hover:text-ember-700 dark:hover:text-ember-300"
                         >
                           {item.value}
                         </a>
@@ -191,8 +197,8 @@ export function About() {
                     </div>
                   </motion.div>
                 ))}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

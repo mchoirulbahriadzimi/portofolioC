@@ -68,7 +68,7 @@ const CATEGORIES = ["Semua", ...PROJECT_CATEGORIES];
 
 function ProjectCardSkeleton() {
   return (
-    <Card className="h-full gap-0 overflow-hidden rounded-2xl p-0">
+    <Card className="h-full gap-0 overflow-hidden rounded-3xl border-border/70 p-0">
       <Skeleton className="aspect-video w-full rounded-none" />
 
       <CardContent className="flex flex-col gap-3 p-5">
@@ -78,9 +78,9 @@ function ProjectCardSkeleton() {
         <Skeleton className="h-4 w-5/6" />
 
         <div className="flex gap-1.5">
-          <Skeleton className="h-5 w-16 rounded-md" />
-          <Skeleton className="h-5 w-20 rounded-md" />
-          <Skeleton className="h-5 w-14 rounded-md" />
+          <Skeleton className="h-5 w-16 rounded-full" />
+          <Skeleton className="h-5 w-20 rounded-full" />
+          <Skeleton className="h-5 w-14 rounded-full" />
         </div>
 
         <Skeleton className="mt-2 h-8 w-full" />
@@ -270,12 +270,13 @@ export function ProjectsSection({
   return (
     <section
       id="proyek"
-      className="scroll-mt-16 py-20 sm:py-24"
+      className="scroll-mt-20 py-20 sm:py-24"
     >
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-8">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <SectionHeading
+              index={3}
               align="left"
               kicker="Proyek"
               title={
@@ -295,7 +296,7 @@ export function ProjectsSection({
             >
               <Button
                 size="lg"
-                className="h-11 gap-2 shadow-lg shadow-cyan-500/25"
+                className="h-11 gap-2 rounded-full font-display shadow-lg shadow-ink-950/15 dark:shadow-black/30"
                 onClick={openCreate}
               >
                 <Plus className="size-4" />
@@ -307,7 +308,7 @@ export function ProjectsSection({
           <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <div className="relative flex-1">
-                <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
 
                 <Input
                   value={search}
@@ -316,7 +317,7 @@ export function ProjectsSection({
                   }
                   placeholder="Cari judul, deskripsi, kategori, atau teknologi..."
                   aria-label="Cari proyek"
-                  className="h-11 pl-9"
+                  className="h-11 rounded-full bg-card/70 pl-10"
                 />
               </div>
 
@@ -327,7 +328,7 @@ export function ProjectsSection({
                 }
               >
                 <SelectTrigger
-                  className="h-11 w-full gap-2 sm:w-48"
+                  className="h-11 w-full gap-2 rounded-full bg-card/70 sm:w-48"
                   aria-label="Urutkan proyek"
                 >
                   <ArrowUpDown className="size-4 text-muted-foreground" />
@@ -362,10 +363,10 @@ export function ProjectsSection({
                     type="button"
                     aria-pressed={active}
                     onClick={() => handleCategoryChange(item)}
-                    className={`inline-flex h-9 items-center rounded-full border px-4 text-sm font-medium transition-all ${
+                    className={`inline-flex h-9 items-center rounded-full border px-4 font-mono text-xs font-medium uppercase tracking-wider transition-all ${
                       active
-                        ? "border-primary bg-primary text-primary-foreground shadow-md shadow-cyan-500/20"
-                        : "border-border bg-card text-muted-foreground hover:border-cyan-500/40 hover:text-foreground"
+                        ? "border-ink-900 bg-ink-900 text-cream-50 shadow-md dark:border-cream-100 dark:bg-cream-100 dark:text-ink-950"
+                        : "border-border bg-card/70 text-muted-foreground hover:border-ember-500/50 hover:text-foreground"
                     }`}
                   >
                     {item}
@@ -378,7 +379,7 @@ export function ProjectsSection({
             {category !== "Semua" &&
               availableSubcategories.length > 0 && (
                 <div className="mt-5 border-t border-border pt-6">
-                  <h3 className="mb-5 text-base font-semibold">
+                  <h3 className="mb-5 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                     SUBKATEGORI — {category}
                   </h3>
 
@@ -398,8 +399,8 @@ export function ProjectsSection({
                           onClick={() => setSubcategory(item)}
                           className={`inline-flex min-h-10 items-center justify-center rounded-full border px-5 py-2 text-sm font-semibold transition-all duration-200 ${
                           active
-                            ? "border-navy-700 bg-navy-700 text-white shadow-md shadow-cyan-500/20 dark:border-cyan-400 dark:bg-cyan-400 dark:text-cyan-950"
-                            : "border-border bg-transparent text-muted-foreground hover:border-navy-500 hover:text-navy-700 dark:hover:border-cyan-400 dark:hover:text-cyan-300"
+                            ? "border-ember-600 bg-ember-600 text-white shadow-md shadow-ember-500/25 dark:border-ember-400 dark:bg-ember-400 dark:text-ember-950"
+                            : "border-border bg-card/70 text-muted-foreground hover:border-ember-500/60 hover:text-ember-700 dark:hover:text-ember-300"
                         }`}
                         >
                           {item}
@@ -418,14 +419,14 @@ export function ProjectsSection({
               ))}
             </div>
           ) : error ? (
-            <Card className="rounded-2xl border-destructive/30">
+            <Card className="rounded-3xl border-destructive/30">
               <CardContent className="flex flex-col items-center gap-4 p-10 text-center">
                 <span className="flex size-14 items-center justify-center rounded-full bg-destructive/10 text-destructive">
                   <RefreshCw className="size-6" />
                 </span>
 
                 <div>
-                  <p className="font-semibold">
+                  <p className="font-display font-semibold">
                     Gagal memuat proyek
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
@@ -433,7 +434,7 @@ export function ProjectsSection({
                   </p>
                 </div>
 
-                <Button onClick={onRetry} className="gap-2">
+                <Button onClick={onRetry} className="gap-2 rounded-full">
                   <RefreshCw className="size-4" />
                   Coba Lagi
                 </Button>
@@ -448,12 +449,12 @@ export function ProjectsSection({
             >
               <Card className="rounded-3xl border-dashed">
                 <CardContent className="flex flex-col items-center gap-4 p-12 text-center">
-                  <span className="flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-navy-500/15 to-cyan-500/15 text-navy-700 dark:text-cyan-300">
+                  <span className="flex size-20 items-center justify-center rounded-full bg-ember-500/10 text-ember-700 dark:text-ember-300">
                     <FolderOpen className="size-9" />
                   </span>
 
                   <div>
-                    <p className="text-lg font-semibold">
+                    <p className="font-display text-lg font-semibold">
                       Belum ada proyek
                     </p>
                     <p className="mt-1 max-w-sm text-sm text-muted-foreground">
@@ -462,7 +463,7 @@ export function ProjectsSection({
                     </p>
                   </div>
 
-                  <Button onClick={openCreate} className="gap-2">
+                  <Button onClick={openCreate} className="gap-2 rounded-full">
                     <Plus className="size-4" />
                     Tambah Proyek Pertama
                   </Button>
@@ -478,12 +479,12 @@ export function ProjectsSection({
             >
               <Card className="rounded-3xl border-dashed">
                 <CardContent className="flex flex-col items-center gap-4 p-12 text-center">
-                  <span className="flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-navy-500/15 to-cyan-500/15 text-navy-700 dark:text-cyan-300">
+                  <span className="flex size-20 items-center justify-center rounded-full bg-ember-500/10 text-ember-700 dark:text-ember-300">
                     <SearchX className="size-9" />
                   </span>
 
                   <div>
-                    <p className="text-lg font-semibold">
+                    <p className="font-display text-lg font-semibold">
                       Tidak ada proyek yang cocok
                     </p>
                     <p className="mt-1 max-w-sm text-sm text-muted-foreground">
@@ -495,7 +496,7 @@ export function ProjectsSection({
                   <Button
                     variant="outline"
                     onClick={resetFilters}
-                    className="gap-2"
+                    className="gap-2 rounded-full"
                   >
                     <RefreshCw className="size-4" />
                     Atur Ulang Filter
@@ -521,7 +522,7 @@ export function ProjectsSection({
             !loading &&
             !error &&
             filteredProjects.length > 0 && (
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="text-center font-mono text-xs uppercase tracking-wider text-muted-foreground">
                 Menampilkan {filteredProjects.length} dari{" "}
                 {projects.length} proyek
               </p>

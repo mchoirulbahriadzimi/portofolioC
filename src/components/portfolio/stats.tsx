@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Award, Clock3, FolderCheck, type LucideIcon } from "lucide-react";
 
-import { Card } from "@/components/ui/card";
 import { fadeUp, staggerContainer, viewportOnce } from "./animations";
 
 function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -48,7 +47,6 @@ interface StatItem {
   value: number;
   suffix: string;
   icon: LucideIcon;
-  iconClassName: string;
 }
 
 interface StatsProps {
@@ -62,58 +60,57 @@ export function Stats({ projectCount }: StatsProps) {
       value: 0,
       suffix: "+",
       icon: Clock3,
-      iconClassName: "bg-navy-500/10 text-navy-700 dark:bg-cyan-400/10 dark:text-cyan-300",
     },
     {
       label: "Proyek Selesai",
       value: projectCount,
       suffix: "+",
       icon: FolderCheck,
-      iconClassName: "bg-cyan-500/10 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300",
     },
     {
       label: "Penghargaan & Sertifikat",
       value: 1,
       suffix: "",
       icon: Award,
-      iconClassName: "bg-navy-500/10 text-navy-700 dark:bg-cyan-400/10 dark:text-cyan-300",
     },
   ];
 
   return (
-    <section aria-label="Statistik singkat" className="w-full py-10 sm:py-12">
+    <section aria-label="Statistik singkat" className="w-full py-12 sm:py-16">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
-          className="mx-auto grid w-full max-w-5xl grid-cols-1 items-stretch justify-center gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid w-full grid-cols-1 overflow-hidden rounded-3xl border border-border/70 bg-card/60 sm:grid-cols-3"
         >
-          {stats.map((stat) => {
+          {stats.map((stat, index) => {
             const Icon = stat.icon;
 
             return (
               <motion.div
                 key={stat.label}
                 variants={fadeUp}
-                className="flex h-full"
+                className={`group relative flex items-center gap-5 px-7 py-7 transition-colors hover:bg-ember-500/5 sm:px-8 ${
+                  index > 0
+                    ? "border-t border-border/70 sm:border-l sm:border-t-0"
+                    : ""
+                }`}
               >
-                <Card className="group flex w-full flex-col items-center justify-center gap-4 rounded-2xl border-border/70 p-6 text-center transition-all duration-300 hover:-translate-y-1.5 hover:border-cyan-500/40 hover:shadow-lg hover:shadow-cyan-500/10 sm:p-8">
-                  <span
-                    className={`flex size-14 shrink-0 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 ${stat.iconClassName}`}
-                  >
-                    <Icon className="size-6" />
-                  </span>
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-ember-500/10 text-ember-700 transition-transform duration-300 group-hover:scale-110 dark:bg-ember-400/10 dark:text-ember-300">
+                  <Icon className="size-5" />
+                </span>
 
-                  <p className="text-4xl font-bold tracking-tight sm:text-5xl">
+                <div className="min-w-0">
+                  <p className="font-display text-4xl font-bold tracking-tight sm:text-5xl">
                     <CountUp value={stat.value} suffix={stat.suffix} />
                   </p>
 
-                  <p className="w-full text-center text-sm leading-relaxed text-muted-foreground sm:text-base">
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                     {stat.label}
                   </p>
-                </Card>
+                </div>
               </motion.div>
             );
           })}

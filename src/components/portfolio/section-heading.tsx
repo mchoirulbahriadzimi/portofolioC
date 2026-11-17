@@ -13,6 +13,8 @@ interface SectionHeadingProps {
   title: ReactNode;
   description?: string;
   align?: "left" | "center";
+  /** Nomor urut editorial, mis. 01, 02 — opsional */
+  index?: number;
   className?: string;
 }
 
@@ -21,6 +23,7 @@ export function SectionHeading({
   title,
   description,
   align = "center",
+  index,
   className,
 }: SectionHeadingProps) {
   return (
@@ -37,17 +40,22 @@ export function SectionHeading({
     >
       <motion.span
         variants={fadeUp}
-        className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1.5 text-xs font-medium uppercase tracking-wider text-cyan-700 dark:text-cyan-300"
+        className="inline-flex items-center gap-2.5 font-mono text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground"
       >
-        <span className="relative flex size-1.5">
-          <span className="absolute inline-flex size-full animate-ping rounded-full bg-cyan-500 opacity-75" />
-          <span className="relative inline-flex size-1.5 rounded-full bg-cyan-500" />
-        </span>
+        <span className="inline-block h-px w-8 bg-ember-500" aria-hidden />
+        {typeof index === "number" ? (
+          <span className="text-ember-600 dark:text-ember-400">
+            {String(index).padStart(2, "0")}
+          </span>
+        ) : null}
         {kicker}
+        {align === "center" ? (
+          <span className="inline-block h-px w-8 bg-ember-500" aria-hidden />
+        ) : null}
       </motion.span>
       <motion.h2
         variants={blurUp}
-        className="max-w-2xl text-3xl font-bold tracking-tight text-balance sm:text-4xl"
+        className="max-w-2xl font-display text-3xl font-bold tracking-tight text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.15]"
       >
         {title}
       </motion.h2>

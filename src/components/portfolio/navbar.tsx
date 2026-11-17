@@ -1,7 +1,12 @@
 
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { Menu, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -36,7 +41,10 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState("beranda");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Progress bar scroll halus (navy → cyan).
+  // Posisi scroll tujuan saat klik menu (kunci sementara scrollspy).
+  const scrollLockTargetRef = useRef<number | null>(null);
+
+  // Progress bar scroll halus (amber).
   const { scrollYProgress } = useScroll();
   const scrollProgress = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -61,37 +69,78 @@ export function Navbar() {
     };
   }, []);
 
-  // Menandai menu berdasarkan section yang sedang terlihat.
+  // Menandai menu berdasarkan posisi scroll (scrollspy deterministik):
+  // section aktif = section terakhir yang melewati garis batas viewport.
   useEffect(() => {
-    const sections = NAV_LINKS.map((link) =>
-      document.getElementById(link.href.slice(1))
-    ).filter((element): element is HTMLElement => Boolean(element));
+    let frame = 0;
 
-    if (sections.length === 0) return;
+    const computeActiveSection = () => {
+      const sections = NAV_LINKS.map((link) =>
+        document.getElementById(link.href.slice(1))
+      ).filter((element): element is HTMLElement => Boolean(element));
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleSections = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (a, b) =>
-              a.boundingClientRect.top - b.boundingClientRect.top
-          );
+      if (sections.length === 0) return;
 
-        if (visibleSections.length > 0) {
-          setActiveSection(visibleSections[0].target.id);
+      // Garis batas: section yang menyentuh/melewati garis ini dianggap aktif.
+      const line = window.innerHeight * 0.35;
+
+      let currentId = sections[0].id;
+
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= line) {
+          currentId = section.id;
+        } else {
+          break;
         }
-      },
-      {
-        // Area tengah viewport digunakan untuk menentukan menu aktif.
-        rootMargin: "-20% 0px -65% 0px",
-        threshold: 0,
       }
-    );
 
-    sections.forEach((section) => observer.observe(section));
+      // Di dasar halaman, pastikan menu terakhir (Kontak) yang aktif.
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 4;
 
-    return () => observer.disconnect();
+      if (atBottom) {
+        currentId = sections[sections.length - 1].id;
+      }
+
+      setActiveSection(currentId);
+    };
+
+    const onScroll = () => {
+      // Throttle dengan requestAnimationFrame agar hemat performa.
+      if (frame) return;
+
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+
+        const lockTarget = scrollLockTargetRef.current;
+
+        if (lockTarget !== null) {
+          // Scroll programatik (klik menu) sedang berlangsung:
+          // pertahankan pilihan klik sampai posisi target tercapai.
+          if (Math.abs(window.scrollY - lockTarget) <= 12) {
+            scrollLockTargetRef.current = null;
+            computeActiveSection();
+          }
+          return;
+        }
+
+        computeActiveSection();
+      });
+    };
+
+    onScroll();
+
+    window.addEventListener("scroll", onScroll, {
+      passive: true,
+    });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   // Scroll menuju section dengan memperhitungkan tinggi navbar.
@@ -119,6 +168,22 @@ export function Navbar() {
 
       window.history.replaceState(null, "", href);
 
+      // Kunci scrollspy selama animasi scroll berlangsung agar menu yang
+      // diklik tetap aktif, lalu terbuka otomatis saat target tercapai.
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      const lockedTarget = Math.min(targetPosition, maxScroll);
+
+      scrollLockTargetRef.current = lockedTarget;
+
+      // Pengaman: lepas kunci jika animasi scroll tidak selesai juga.
+      window.setTimeout(() => {
+        if (scrollLockTargetRef.current === lockedTarget) {
+          scrollLockTargetRef.current = null;
+        }
+      }, 2000);
+
       window.scrollTo({
         top: targetPosition,
         behavior: "smooth",
@@ -138,40 +203,41 @@ export function Navbar() {
       initial={{ y: -64, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={cn(
-        "sticky top-0 z-50 w-full border-b transition-colors duration-300",
-        scrolled
-          ? "border-border/60 bg-background/90 shadow-sm backdrop-blur-xl"
-          : "border-border/40 bg-background/80 backdrop-blur-xl"
-      )}
+      className="fixed inset-x-0 top-0 z-50 w-full pt-3 sm:pt-4"
     >
       <nav
         aria-label="Navigasi utama"
-        className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8"
+        className={cn(
+          "mx-auto flex h-14 w-[calc(100%-2rem)] max-w-5xl items-center justify-between rounded-2xl border px-3 transition-all duration-300 sm:w-[calc(100%-3rem)] sm:h-16 sm:px-4",
+          scrolled
+            ? "border-border/80 bg-card/85 shadow-lg shadow-ink-950/5 backdrop-blur-xl dark:shadow-black/20"
+            : "border-transparent bg-card/60 backdrop-blur-lg"
+        )}
       >
         {/* Logo dan nama */}
         <a
           href="#beranda"
           aria-label="Kembali ke beranda"
           onClick={(event) => handleNavClick(event, "#beranda")}
-          className="group flex min-h-11 items-center gap-2.5"
+          className="group flex min-h-11 items-center gap-2.5 pl-1.5"
         >
           <motion.span
             whileHover={{ rotate: -8, scale: 1.08 }}
             transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            className="flex size-9 items-center justify-center rounded-lg bg-gradient-to-br from-navy-700 via-navy-600 to-cyan-600 text-sm font-bold text-white shadow-md shadow-cyan-500/20 dark:from-navy-900 dark:via-cyan-500 dark:to-cyan-400 dark:text-navy-950"
+            className="relative flex size-9 items-center justify-center rounded-xl bg-ink-900 font-display text-sm font-bold text-cream-50 shadow-sm dark:bg-cream-100 dark:text-ink-950"
           >
             {profile.monogram}
+            <span className="absolute -right-1 -top-1 size-2.5 rounded-full border-2 border-card bg-ember-500" />
           </motion.span>
 
-          <span className="hidden font-semibold tracking-tight sm:block">
+          <span className="hidden font-display font-semibold tracking-tight sm:block">
             {profile.name}
           </span>
         </a>
 
         {/* Navigasi desktop */}
-        <ul className="hidden items-center gap-1 lg:flex">
-          {NAV_LINKS.map((link) => {
+        <ul className="hidden items-center gap-0.5 lg:flex">
+          {NAV_LINKS.map((link, index) => {
             const isActive =
               activeSection === link.href.slice(1);
 
@@ -184,17 +250,20 @@ export function Navbar() {
                   }
                   aria-current={isActive ? "location" : undefined}
                   className={cn(
-                    "relative inline-flex h-10 items-center rounded-full px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
+                    "group relative inline-flex h-10 items-center gap-1.5 rounded-full px-4 text-sm font-medium transition-colors hover:bg-secondary hover:text-foreground",
                     isActive
-                      ? "bg-navy-500/10 text-navy-800 dark:bg-cyan-400/10 dark:text-cyan-300"
+                      ? "text-ember-700 dark:text-ember-300"
                       : "text-muted-foreground"
                   )}
                 >
+                  <span className="font-mono text-[10px] leading-none text-ember-500/80">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                   {link.label}
                   {isActive && (
                     <motion.span
                       layoutId="nav-active-dot"
-                      className="absolute -bottom-0.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-cyan-500 dark:bg-cyan-400"
+                      className="absolute -bottom-0.5 left-1/2 h-0.5 w-4 -translate-x-1/2 rounded-full bg-ember-500"
                     />
                   )}
                 </a>
@@ -208,7 +277,7 @@ export function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="size-10"
+            className="size-10 rounded-full"
             aria-label="Ganti tema terang/gelap"
             onClick={toggleTheme}
           >
@@ -217,7 +286,10 @@ export function Navbar() {
           </Button>
 
           {/* Tombol kontak desktop */}
-          <Button asChild className="hidden h-10 px-5 lg:inline-flex">
+          <Button
+            asChild
+            className="hidden h-10 rounded-full px-5 font-display sm:inline-flex"
+          >
             <a
               href="#kontak"
               onClick={(event) =>
@@ -234,7 +306,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="size-10 lg:hidden"
+                className="size-10 rounded-full lg:hidden"
                 aria-label="Buka menu navigasi"
               >
                 <Menu className="size-5" />
@@ -244,8 +316,9 @@ export function Navbar() {
             <SheetContent side="right" className="w-72">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2.5">
-                  <span className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-navy-700 via-navy-600 to-cyan-600 text-xs font-bold text-white dark:from-navy-900 dark:via-cyan-500 dark:to-cyan-400 dark:text-navy-950">
+                  <span className="relative flex size-8 items-center justify-center rounded-lg bg-ink-900 font-display text-xs font-bold text-cream-50 dark:bg-cream-100 dark:text-ink-950">
                     {profile.monogram}
+                    <span className="absolute -right-1 -top-1 size-2 rounded-full border-2 border-card bg-ember-500" />
                   </span>
 
                   {profile.name}
@@ -260,7 +333,7 @@ export function Navbar() {
                 aria-label="Navigasi seluler"
                 className="flex flex-col gap-1 px-4"
               >
-                {NAV_LINKS.map((link) => {
+                {NAV_LINKS.map((link, index) => {
                   const isActive =
                     activeSection === link.href.slice(1);
 
@@ -275,17 +348,20 @@ export function Navbar() {
                         isActive ? "location" : undefined
                       }
                       className={cn(
-                        "flex h-11 items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-accent",
+                        "flex h-11 items-center gap-2.5 rounded-xl px-3 text-sm font-medium transition-colors hover:bg-secondary",
                         isActive &&
-                          "bg-navy-500/10 text-navy-800 dark:bg-cyan-400/10 dark:text-cyan-300"
+                          "bg-ember-500/10 text-ember-700 dark:text-ember-300"
                       )}
                     >
+                      <span className="font-mono text-[10px] text-ember-500/80">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
                       {link.label}
                     </a>
                   );
                 })}
 
-                <Button asChild className="mt-3 h-11">
+                <Button asChild className="mt-3 h-11 rounded-xl font-display">
                   <a
                     href="#kontak"
                     onClick={(event) =>
@@ -301,11 +377,11 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Progress bar scroll (navy → cyan) */}
+      {/* Progress bar scroll (amber) */}
       <motion.div
         aria-hidden
         style={{ scaleX: scrollProgress }}
-        className="absolute inset-x-0 -bottom-px h-0.5 origin-left bg-gradient-to-r from-navy-700 via-cyan-500 to-cyan-400 dark:from-cyan-500 dark:via-cyan-400 dark:to-navy-400"
+        className="absolute inset-x-0 top-0 h-0.5 origin-top bg-gradient-to-r from-ember-600 via-ember-500 to-ember-400"
       />
     </motion.header>
   );

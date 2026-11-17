@@ -33,7 +33,7 @@ export function SafeImage({
         role="img"
         aria-label={alt}
         className={cn(
-          "flex items-center justify-center bg-gradient-to-br from-navy-500/10 via-transparent to-cyan-400/10",
+          "flex items-center justify-center bg-gradient-to-br from-ember-400/10 via-transparent to-ember-600/10",
           className,
           fallbackClassName
         )}

@@ -63,11 +63,11 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
       transition={{ duration: 0.5, ease: "easeOut", delay: (index % 3) * 0.08 }}
       className="h-full"
     >
-      <Card className="group flex h-full gap-0 overflow-hidden rounded-2xl border-border/70 p-0 transition-all duration-300 hover:-translate-y-1.5 hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10">
+      <Card className="group flex h-full gap-0 overflow-hidden rounded-3xl border-border/70 p-0 transition-all duration-300 hover:-translate-y-1.5 hover:border-ember-500/50 hover:shadow-xl hover:shadow-ember-500/10">
         {/* Gambar */}
-        <div className="relative aspect-video w-full shrink-0 overflow-hidden bg-muted">
+        <div className="relative aspect-video w-full shrink-0 overflow-hidden bg-secondary">
           {isOfficeDocument ? (
-            <div className="flex size-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-muted to-background p-6">
+            <div className="flex size-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-secondary to-background p-6">
               <span
                 className="flex size-20 items-center justify-center rounded-2xl shadow-sm"
                 style={{ color: documentMeta.color, backgroundColor: `${documentMeta.color}18` }}
@@ -76,7 +76,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
                 <DocumentIcon className="size-12" strokeWidth={1.7} />
               </span>
               <span
-                className="rounded-full px-3 py-1 text-xs font-bold tracking-widest"
+                className="rounded-full px-3 py-1 font-mono text-xs font-bold tracking-widest"
                 style={{ color: documentMeta.color, backgroundColor: `${documentMeta.color}18` }}
               >
                 {documentMeta.label}
@@ -94,7 +94,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
           )}
           {/* Badge unggulan */}
           {project.featured ? (
-            <Badge className="absolute top-3 left-3 gap-1 rounded-full border-cyan-300/30 bg-cyan-400/90 text-cyan-950 shadow-sm backdrop-blur">
+            <Badge className="absolute top-3 left-3 gap-1 rounded-full border-ember-600/30 bg-ember-500/95 text-white shadow-sm backdrop-blur">
               <Star className="size-3 fill-current" />
               Unggulan
             </Badge>
@@ -102,10 +102,10 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
           {/* Badge status */}
           <span
             className={cn(
-              "absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium shadow-sm backdrop-blur",
+              "absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[11px] font-medium tracking-wide shadow-sm backdrop-blur",
               isDone
-                ? "border border-cyan-300/40 bg-cyan-500/90 text-white dark:bg-cyan-400/90 dark:text-cyan-950"
-                : "border border-navy-400/40 bg-navy-700/90 text-white dark:bg-navy-600/90 dark:text-white"
+                ? "border border-ember-500/40 bg-ink-900/90 text-cream-50 dark:bg-ink-800/90"
+                : "border border-ember-500/40 bg-ember-600/90 text-white dark:bg-ember-500/90 dark:text-ember-950"
             )}
           >
             <span className="size-1.5 rounded-full bg-current" />
@@ -116,7 +116,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
         {/* Konten */}
         <CardContent className="flex flex-1 flex-col gap-3 p-5">
           <div className="flex items-center justify-between gap-2">
-            <span className="text-xs font-semibold tracking-wider text-navy-700 uppercase dark:text-cyan-300">
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ember-700 dark:text-ember-300">
               {project.category}
             </span>
             <DropdownMenu>
@@ -146,7 +146,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
             </DropdownMenu>
           </div>
 
-          <h3 className="line-clamp-1 font-semibold tracking-tight">{project.title}</h3>
+          <h3 className="line-clamp-1 font-display text-lg font-semibold tracking-tight">{project.title}</h3>
 
           <p className="flex-1 text-sm leading-relaxed text-muted-foreground line-clamp-3">
             {project.description}
@@ -155,12 +155,12 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
           {/* Tech stack — maksimal 4 + sisa */}
           <div className="flex flex-wrap gap-1.5">
             {techs.slice(0, 4).map((tech) => (
-              <Badge key={tech} variant="secondary" className="font-normal">
+              <Badge key={tech} variant="secondary" className="rounded-full font-normal">
                 {tech}
               </Badge>
             ))}
             {techs.length > 4 ? (
-              <Badge variant="outline" className="font-normal text-navy-700 dark:text-cyan-300">
+              <Badge variant="outline" className="rounded-full font-normal text-ember-700 dark:text-ember-300">
                 +{techs.length - 4}
               </Badge>
             ) : null}
@@ -168,7 +168,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
 
           {/* Footer: tahun + tautan */}
           <div className="mt-1 flex items-center justify-between border-t border-border/60 pt-3">
-            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
               <Calendar className="size-3.5" />
               {project.year || "—"}
             </span>
@@ -178,7 +178,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
                   <Button
                     variant="outline"
                     size="icon"
-                    className="size-8"
+                    className="size-8 rounded-full"
                     onClick={() => {
                       if (!fileUrl) return;
                       // Open the portfolio's own preview route in a new tab.
@@ -193,7 +193,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
                   <Button
                     variant="outline"
                     size="icon"
-                    className="size-8"
+                    className="size-8 rounded-full"
                     asChild
                   >
                     <a
@@ -211,7 +211,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
                 <Button
                   variant="outline"
                   size="icon"
-                  className="size-9"
+                  className="size-9 rounded-full transition-colors hover:border-ember-500/50 hover:text-ember-700 dark:hover:text-ember-300"
                   asChild
                 >
                   <a
@@ -229,7 +229,7 @@ export function ProjectCard({ project, onEdit, onRequestDelete, index = 0 }: Pro
                 <Button
                   variant="outline"
                   size="icon"
-                  className="size-9"
+                  className="size-9 rounded-full transition-colors hover:border-ember-500/50 hover:text-ember-700 dark:hover:text-ember-300"
                   asChild
                 >
                   <a

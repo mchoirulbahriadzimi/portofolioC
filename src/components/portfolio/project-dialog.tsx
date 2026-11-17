@@ -468,7 +468,7 @@ export function ProjectDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="grid max-h-[90dvh] gap-5 overflow-y-auto rounded-2xl pr-5 custom-scrollbar sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="font-display text-xl font-medium">
             {project ? "Edit Proyek" : "Tambah Proyek"}
           </DialogTitle>
 
@@ -769,14 +769,14 @@ export function ProjectDialog({
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={processingFile}
-                  className="flex min-h-28 w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-background/50 p-4 text-sm text-muted-foreground transition-colors hover:border-cyan-500/50 hover:bg-cyan-500/5 disabled:cursor-wait disabled:opacity-70"
+                  className="flex min-h-28 w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-background/50 p-4 text-sm text-muted-foreground transition-colors hover:border-ember-500/60 hover:bg-ember-500/10 disabled:cursor-wait disabled:opacity-70"
                 >
                   {processingFile ? (
-                    <Loader2 className="size-5 animate-spin text-cyan-500" />
+                    <Loader2 className="size-5 animate-spin text-ember-500" />
                   ) : officeCategory ? (
-                    <FileText className="size-6 text-cyan-500" />
+                    <FileText className="size-6 text-ember-500" />
                   ) : (
-                    <ImagePlus className="size-5 text-cyan-500" />
+                    <ImagePlus className="size-5 text-ember-500" />
                   )}
 
                   <span>
@@ -849,7 +849,7 @@ export function ProjectDialog({
                     className="h-16 w-20 shrink-0 rounded-lg object-cover"
                   />
                 ) : (
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-navy-500/10 text-navy-700 dark:bg-cyan-400/10 dark:text-cyan-300">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-ember-500/25 bg-ember-500/10 text-ember-700 dark:border-ember-400/25 dark:bg-ember-400/10 dark:text-ember-300">
                     <ImagePlus className="size-5" />
                   </span>
                 )}
@@ -922,7 +922,7 @@ export function ProjectDialog({
           {/* Proyek unggulan */}
           <div className="flex items-center justify-between gap-4 rounded-xl border border-border/70 p-4">
             <div className="flex items-center gap-3">
-              <span className="flex size-9 items-center justify-center rounded-lg bg-navy-500/15 text-navy-700 dark:bg-cyan-400/15 dark:text-cyan-300">
+              <span className="flex size-9 items-center justify-center rounded-xl border border-ember-500/25 bg-ember-500/10 text-ember-700 dark:border-ember-400/25 dark:bg-ember-400/10 dark:text-ember-300">
                 <Star className="size-4" />
               </span>
 

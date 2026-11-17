@@ -160,6 +160,7 @@ export function Contact() {
     <section id="kontak" className="scroll-mt-20 py-20 sm:py-24">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
+          index={4}
           kicker="Kontak"
           title={
             <>
@@ -197,14 +198,14 @@ export function Contact() {
                         }
                       : undefined
                   }
-                  className="flex items-center gap-4 rounded-2xl border border-border/70 bg-card/60 p-4 transition-all hover:-translate-y-0.5 hover:border-cyan-500/40 hover:shadow-md hover:shadow-cyan-500/10"
+                  className="group flex items-center gap-4 rounded-2xl border border-border/70 bg-card/70 p-4 transition-all hover:-translate-y-0.5 hover:border-ember-500/50 hover:shadow-md hover:shadow-ember-500/10"
                 >
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-navy-500/10 text-navy-700 transition-colors group-hover:bg-cyan-500/15 dark:bg-cyan-400/10 dark:text-cyan-300">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-ember-500/25 bg-ember-500/10 text-ember-700 transition-colors dark:border-ember-400/25 dark:bg-ember-400/10 dark:text-ember-300">
                     <item.icon className="size-5" />
                   </span>
 
                   <span className="min-w-0">
-                    <span className="block text-xs uppercase tracking-wider text-muted-foreground">
+                    <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
                       {item.label}
                     </span>
 
@@ -217,7 +218,7 @@ export function Contact() {
             ))}
 
             <motion.div variants={fadeUp} className="mt-2">
-              <p className="mb-3 text-sm font-medium">
+              <p className="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">
                 Temukan saya di
               </p>
 
@@ -236,7 +237,7 @@ export function Contact() {
                       <Button
                         variant="outline"
                         size="icon"
-                        className="size-11 rounded-xl transition-colors hover:border-cyan-500/50 hover:text-cyan-600 dark:hover:text-cyan-300"
+                        className="size-11 rounded-full transition-colors hover:border-ember-500/60 hover:bg-ember-500/10 hover:text-ember-700 dark:hover:text-ember-300"
                         asChild
                       >
                         <a
@@ -267,9 +268,9 @@ export function Contact() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="lg:col-span-3"
           >
-            <Card className="h-full rounded-2xl border-border/70 p-6 sm:p-8">
+            <Card className="h-full rounded-3xl border-border/70 bg-card/70 p-6 sm:p-8">
               <CardHeader className="px-0">
-                <CardTitle className="text-lg">
+                <CardTitle className="font-display text-lg">
                   Kirim Pesan
                 </CardTitle>
 
@@ -299,6 +300,7 @@ export function Contact() {
                           setField("nama", e.target.value)
                         }
                         aria-invalid={Boolean(errors.nama)}
+                        className="rounded-xl bg-background/70"
                       />
 
                       {errors.nama && (
@@ -322,6 +324,7 @@ export function Contact() {
                           setField("email", e.target.value)
                         }
                         aria-invalid={Boolean(errors.email)}
+                        className="rounded-xl bg-background/70"
                       />
 
                       {errors.email && (
@@ -346,6 +349,7 @@ export function Contact() {
                         setField("pesan", e.target.value)
                       }
                       aria-invalid={Boolean(errors.pesan)}
+                      className="rounded-xl bg-background/70"
                     />
 
                     {errors.pesan && (
@@ -363,7 +367,7 @@ export function Contact() {
                     <Button
                       type="submit"
                       size="lg"
-                      className="h-11 w-full gap-2 bg-gradient-to-r from-navy-700 to-navy-800 shadow-lg shadow-cyan-500/25 transition-shadow hover:from-navy-800 hover:to-navy-900 hover:shadow-cyan-500/40 sm:w-auto dark:from-cyan-500 dark:to-cyan-600 dark:text-navy-950 dark:hover:from-cyan-400 dark:hover:to-cyan-500"
+                      className="h-12 w-full gap-2 rounded-full font-display shadow-lg shadow-ink-950/15 transition-shadow hover:shadow-xl hover:shadow-ink-950/20 dark:shadow-black/30 sm:w-auto"
                       disabled={sending}
                     >
                       <Send className="size-4" />
